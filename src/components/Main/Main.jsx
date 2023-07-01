@@ -1,13 +1,17 @@
-import styles from "./Main.module.css"
-import Card from "../Card/Card"
+import styles from './Main.module.css';
+import Card from '../Card/Card';
 function Main({ cards }) {
-   console.log(cards)
-   return (
-      <main className={styles.content}>
-         {cards.map(card =>
-            <Card key={card.id} card={card} />
-         )}
-      </main>
-   )
+    return (
+        <main className={styles.content}>
+            {cards.length > 0
+                ? cards.map((card) => (
+                      <Card
+                          key={card.id}
+                          card={card}
+                      />
+                  ))
+                : 'Ничего не найдено'}
+        </main>
+    );
 }
-export default Main
+export default Main;

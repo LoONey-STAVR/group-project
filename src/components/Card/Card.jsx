@@ -1,12 +1,18 @@
-import styles from "./Card.module.css"
+import styles from './Card.module.css';
 //
 function Card({ card }) {
-
-   return (
-      <div className={styles.card}>
-         <img src={card.images.downsized.url} alt="" className={styles.images} />
-         <h2 className={styles.title}>{card.user.description}</h2>
-      </div>
-   )
+    console.log(card);
+    return (
+        <div className={styles.card}>
+            <img
+                src={card.images.downsized.url}
+                alt=''
+                className={styles.images}
+            />
+            <div className={styles.titleZone}>
+                <h2 className={styles.title}>{card.title}</h2>
+            </div>
+        </div>
+    );
 }
-export default Card
+export default Card;
