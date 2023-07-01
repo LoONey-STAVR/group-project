@@ -5,6 +5,7 @@
     flex-direction: column;
     position: relative;
     box-sizing: border-box;
+    max-height: 600px;
 }
 
 .images {
