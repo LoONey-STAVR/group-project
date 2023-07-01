@@ -1,17 +1,19 @@
 import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import styles from './Navigate.module.css';
 function Navigate({ onRandom, onTrend, onLink }) {
+    const location = useLocation();
     return (
         <nav className={styles.nav}>
             <Link
-                onClick={onLink}
+                onClick={location.pathname !== '/search' && onLink}
                 className={styles.link}
                 to='/search'
             >
                 Поиск
             </Link>
             <Link
-                onClick={onTrend}
+                onClick={location.pathname !== '/trends' && onTrend}
                 className={styles.link}
                 to='/trends'
             >
@@ -20,7 +22,7 @@ function Navigate({ onRandom, onTrend, onLink }) {
             <Link
                 className={styles.link}
                 to='/random'
-                onClick={onRandom}
+                onClick={location.pathname !== '/random' && onRandom}
             >
                 Случайный гиф
             </Link>

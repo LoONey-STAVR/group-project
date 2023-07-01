@@ -25,6 +25,8 @@ function App() {
             0
         ) {
             setFetching(true);
+        } else {
+            setFetching(false);
         }
     };
 
@@ -62,7 +64,7 @@ function App() {
     }
 
     function resetCards() {
-        setCards([]);
+        setCards((prev) => []);
         setCurrentQuery(0);
         setPrevieCard({});
         setSearchValue('');
@@ -78,7 +80,6 @@ function App() {
     }
     function handleShare(card) {
         navigator.clipboard.writeText(card.url);
-        setShare(card.url);
     }
     function handleLink(request) {
         request().then().catch(console.error);
@@ -134,8 +135,8 @@ function App() {
                                     onShare={handleShare}
                                     card={previewCard}
                                     onCard={() => {
+                                        window.addEventListener('scroll', scrollHandler);
                                         window.history.go(-1);
-                                        setShare('');
                                     }}
                                 />
                             </div>
