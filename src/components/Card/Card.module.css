@@ -1,11 +1,10 @@
 .card {
     flex: 0 1 300px;
-    
     display: flex;
     flex-direction: column;
     position: relative;
     box-sizing: border-box;
-    max-height: 600px;
+    transition: all 0.2s ease;
 }
 
 .images {
@@ -14,7 +13,9 @@
     object-fit: cover;
     flex: 1 1 auto;
     border-radius: 15px;
+    pointer-events: none;
 }
+
 .titleZone {
     box-sizing: border-box;
     position: absolute;
@@ -37,5 +38,8 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     cursor: default;
-    color:rgb(221, 191, 58)
+    color: rgb(221, 191, 58);
+}
+.empty {
+    text-align: center;
 }

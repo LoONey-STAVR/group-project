@@ -5,20 +5,22 @@ import { useEffect, useState } from 'react';
 import api from '../../utils/api';
 import Random from '../Random/Random';
 import { Route, Routes } from 'react-router-dom';
-import Trends from "../../pages/Trends"
+import Trends from '../../pages/Trends';
+import { useNavigate } from 'react-router-dom';
 function App() {
     const [cards, setCards] = useState([]);
     const [searchValue, setSearchValue] = useState('');
-    const [randonGif, setRandomGif] = useState({})
+    const [randonGif, setRandomGif] = useState({});
+    const navigate = useNavigate();
     useEffect(() => {
-        api.getTrending(20).then(({ data }) => {
-            setCards(data);
-        });
         api.getRandomGif()
-            .then(res => setRandomGif(res.data))
-            .catch(err => console.log(err))
+            .then((res) => setRandomGif(res.data))
+            .catch((err) => console.log(err));
     }, []);
 
+    useEffect(() => {
+        navigate('/search', { replace: true });
+    }, []);
     useEffect(() => {
         searchValue ? api.getSearch(searchValue).then(({ data }) => setCards(data)) : setCards([]);
     }, [searchValue]);
@@ -45,18 +47,19 @@ function App() {
                 onTrends={handleTrendsClick}
                 onSearch={handleSearchLink}
             />
-            <input
-                className='input'
-                type='text'
-                value={searchValue}
-                onChange={(e) => setSearchValue(e.target.value)}
-            />
-            <Random card={randonGif} />
-            {/* <Main cards={cards} /> */}
+
+            {/* <Random card={randonGif} /> */}
+
             <Routes>
                 <Route
                     path='/search'
-                    element={<Search cards={cards} />}
+                    element={
+                        <Search
+                            onChange={setSearchValue}
+                            searchValue={searchValue}
+                            cards={cards}
+                        />
+                    }
                 ></Route>
                 <Route
                     path='/trends'
