@@ -3,21 +3,15 @@ import Header from '../Header/Header';
 import Search from '../../pages/Search';
 import { useEffect, useState } from 'react';
 import api from '../../utils/api';
-import Random from '../Random/Random';
+import Random from '../../pages/Random';
 import { Route, Routes } from 'react-router-dom';
 import Trends from "../../pages/Trends"
 function App() {
     const [cards, setCards] = useState([]);
     const [searchValue, setSearchValue] = useState('');
-    const [randonGif, setRandomGif] = useState({})
-    useEffect(() => {
-        api.getTrending(20).then(({ data }) => {
-            setCards(data);
-        });
-        api.getRandomGif()
-            .then(res => setRandomGif(res.data))
-            .catch(err => console.log(err))
-    }, []);
+    const [randomGif, setRandomGif] = useState({})
+    const [randomPageState, setRandomPageState] = useState(false)
+
 
     useEffect(() => {
         searchValue ? api.getSearch(searchValue).then(({ data }) => setCards(data)) : setCards([]);
@@ -27,16 +21,26 @@ function App() {
         setCards([]);
         setSearchValue('');
     }
-
     function handleLink(request) {
         request().then().catch(console.error);
     }
-
     function handleTrendsClick() {
         function getResponce() {
-            return api.getTrending(30).then(({ data }) => setCards(data));
+            return api.getTrending(30).then(({ data }) => {
+                setCards(data)
+                setRandomPageState(false)
+            });
         }
         handleLink(getResponce);
+    }
+    function handleRandomGifClick() {
+        function getRandomGif() {
+            return api.getRandomGif().then((res) => {
+                setRandomPageState(true)
+                setRandomGif(res.data)
+            })
+        }
+        handleLink(getRandomGif)
     }
 
     return (
@@ -44,15 +48,14 @@ function App() {
             <Header
                 onTrends={handleTrendsClick}
                 onSearch={handleSearchLink}
+                onRandom={handleRandomGifClick}
             />
-            <input
+            {!randomPageState && <input
                 className='input'
                 type='text'
                 value={searchValue}
                 onChange={(e) => setSearchValue(e.target.value)}
-            />
-            <Random card={randonGif} />
-            {/* <Main cards={cards} /> */}
+            />}
             <Routes>
                 <Route
                     path='/search'
@@ -62,6 +65,7 @@ function App() {
                     path='/trends'
                     element={<Trends cards={cards} />}
                 ></Route>
+                <Route path='/random' element={<Random card={randomGif} />} />
             </Routes>
         </>
     );
