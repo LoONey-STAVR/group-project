@@ -11,12 +11,10 @@ function App() {
     const [cards, setCards] = useState([]);
     const [searchValue, setSearchValue] = useState('');
     const [randomGif, setRandomGif] = useState({})
-    const [randomPageState, setRandomPageState] = useState(false)
     const navigate = useNavigate();
 
     useEffect(() => {
         navigate('/search', { replace: true });
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     useEffect(() => {
@@ -32,19 +30,13 @@ function App() {
     }
     function handleTrendsClick() {
         function getResponce() {
-            return api.getTrending(30).then(({ data }) => {
-                setCards(data)
-                setRandomPageState(false)
-            });
+            return api.getTrending(30).then(({ data }) => setCards(data));
         }
         handleLink(getResponce);
     }
     function handleRandomGifClick() {
         function getRandomGif() {
-            return api.getRandomGif().then((res) => {
-                setRandomPageState(true)
-                setRandomGif(res.data)
-            })
+            return api.getRandomGif().then((res) => setRandomGif(res.data))
         }
         handleLink(getRandomGif)
     }
@@ -56,12 +48,6 @@ function App() {
                 onSearch={handleSearchLink}
                 onRandom={handleRandomGifClick}
             />
-            {!randomPageState && <input
-                className='input'
-                type='text'
-                value={searchValue}
-                onChange={(e) => setSearchValue(e.target.value)}
-            />}
             <Routes>
                 <Route
                     path='/search'
