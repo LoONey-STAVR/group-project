@@ -1,7 +1,7 @@
 import styles from './Search.module.css';
 import Card from '../components/Card/Card';
 
-function Search({ cards, searchValue, onChange, onShare }) {
+function Search({ cards, searchValue, onChange, onShare, onCard }) {
     function handleChangeInput(e) {
         onChange(e.target.value);
     }
@@ -20,6 +20,7 @@ function Search({ cards, searchValue, onChange, onShare }) {
                             onShare={onShare}
                             key={index}
                             card={card}
+                            onCard={onCard}
                         />
                     ))}
                 </div>

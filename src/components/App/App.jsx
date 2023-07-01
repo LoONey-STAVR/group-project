@@ -109,6 +109,7 @@ function App() {
                             onChange={setSearchValue}
                             searchValue={searchValue}
                             cards={cards}
+                            onCard={setPrevieCard}
                         />
                     }
                 ></Route>
