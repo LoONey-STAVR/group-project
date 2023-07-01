@@ -2,14 +2,19 @@ import './App.css';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import { useEffect, useState } from 'react';
-import api from '../../utils/Api';
+import api from '../../utils/api';
+import Random from '../Random/Random';
 function App() {
     const [cards, setCards] = useState([]);
     const [searchValue, setSearchValue] = useState('');
+    const [randonGif, setRandomGif] = useState({})
     useEffect(() => {
         api.getTrending(20).then(({ data }) => {
             setCards(data);
         });
+        api.getRandomGif()
+            .then(res => setRandomGif(res.data))
+            .catch(err => console.log(err))
     }, []);
 
     useEffect(() => {
@@ -25,7 +30,8 @@ function App() {
                 value={searchValue}
                 onChange={(e) => setSearchValue(e.target.value)}
             />
-            <Main cards={cards} />
+            <Random card={randonGif} />
+            {/* <Main cards={cards} /> */}
         </>
     );
 }

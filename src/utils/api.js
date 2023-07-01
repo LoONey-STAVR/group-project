@@ -19,6 +19,9 @@ class Api {
     getSearch(value) {
         return this._request('search', `q=${value}`);
     }
+    getRandomGif() {
+        return this._request("random")
+    }
 }
 
 const api = new Api({ baseURL: 'https://api.giphy.com/v1/gifs', apiKey: 'nJXfAbJKRU6yP8wDDe0WF0H85H1iPu9I' });

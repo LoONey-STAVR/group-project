@@ -1,7 +1,6 @@
 import styles from './Card.module.css';
 //
 function Card({ card }) {
-    console.log(card);
     return (
         <div className={styles.card}>
             <img
