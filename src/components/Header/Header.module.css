@@ -9,4 +9,5 @@
 .logo {
    padding: 0 0 60px;
    max-width: 300px;
+   pointer-events: none;
 }

@@ -5,14 +5,20 @@ import { useEffect, useState } from 'react';
 import api from '../../utils/api';
 import Random from '../../pages/Random';
 import { Route, Routes } from 'react-router-dom';
-import Trends from "../../pages/Trends"
+import Trends from '../../pages/Trends';
+import { useNavigate } from 'react-router-dom';
 function App() {
     const [cards, setCards] = useState([]);
     const [searchValue, setSearchValue] = useState('');
     const [randomGif, setRandomGif] = useState({})
     const [randomPageState, setRandomPageState] = useState(false)
+    const navigate = useNavigate();
 
+    useEffect(() => {
+        navigate('/search', { replace: true });
 
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
     useEffect(() => {
         searchValue ? api.getSearch(searchValue).then(({ data }) => setCards(data)) : setCards([]);
     }, [searchValue]);
@@ -59,7 +65,13 @@ function App() {
             <Routes>
                 <Route
                     path='/search'
-                    element={<Search cards={cards} />}
+                    element={
+                        <Search
+                            onChange={setSearchValue}
+                            searchValue={searchValue}
+                            cards={cards}
+                        />
+                    }
                 ></Route>
                 <Route
                     path='/trends'
