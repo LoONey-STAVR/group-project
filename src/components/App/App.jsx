@@ -36,7 +36,10 @@ function App() {
 
     function handleTrendsClick() {
         function getResponce() {
-            return api.getTrending(30).then(({ data }) => setCards(data));
+            return api.getTrending(30).then(({ data }) => {
+                console.log(data);
+                setCards(data);
+            });
         }
         handleLink(getResponce);
     }
