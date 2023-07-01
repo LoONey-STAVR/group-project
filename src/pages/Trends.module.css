@@ -1,0 +1,10 @@
+.empty {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.content {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 2fr auto;
+}

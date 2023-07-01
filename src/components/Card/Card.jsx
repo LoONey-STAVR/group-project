@@ -1,9 +1,8 @@
 import styles from './Card.module.css';
 //
 function Card({ card }) {
-    console.log(card);
     return (
-        <div className={styles.card}>
+        <main className={styles.card}>
             <img
                 src={card.images.downsized.url}
                 alt=''
@@ -12,7 +11,7 @@ function Card({ card }) {
             <div className={styles.titleZone}>
                 <h2 className={styles.title}>{card.title}</h2>
             </div>
-        </div>
+        </main>
     );
 }
 export default Card;
