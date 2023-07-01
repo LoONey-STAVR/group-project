@@ -1,6 +1,7 @@
 import styles from './Search.module.css';
 import Card from '../components/Card/Card';
-function Search({ cards, searchValue, onChange }) {
+
+function Search({ cards, searchValue, onChange, onShare }) {
     function handleChangeInput(e) {
         onChange(e.target.value);
     }
@@ -14,9 +15,10 @@ function Search({ cards, searchValue, onChange }) {
             />
             {cards.length > 0 ? (
                 <div className={styles.cards}>
-                    {cards.map((card) => (
+                    {cards.map((card, index) => (
                         <Card
-                            key={card.id}
+                            onShare={onShare}
+                            key={index}
                             card={card}
                         />
                     ))}

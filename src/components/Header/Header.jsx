@@ -1,7 +1,7 @@
 import styles from './Header.module.css';
 import logo from '../../images/logo.png';
 import Navigate from '../Navigate/Navigate';
-function Header({ onSearch, onTrends, onRandom }) {
+function Header({ onRandom, onTrend, onLink }) {
     return (
         <div className={styles.header}>
             <img
@@ -10,9 +10,9 @@ function Header({ onSearch, onTrends, onRandom }) {
                 className={styles.logo}
             />
             <Navigate
-                onTrends={onTrends}
+                onLink={onLink}
+                onTrend={onTrend}
                 onRandom={onRandom}
-                onSearch={onSearch}
             />
         </div>
     );

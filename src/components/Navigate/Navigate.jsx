@@ -1,19 +1,19 @@
 import { Link } from 'react-router-dom';
 import styles from './Navigate.module.css';
-function Navigate({ onSearch, onTrends, onRandom }) {
+function Navigate({ onRandom, onTrend, onLink }) {
     return (
         <nav className={styles.nav}>
             <Link
+                onClick={onLink}
                 className={styles.link}
                 to='/search'
-                onClick={onSearch}
             >
                 Поиск
             </Link>
             <Link
+                onClick={onTrend}
                 className={styles.link}
                 to='/trends'
-                onClick={onTrends}
             >
                 Тренды
             </Link>

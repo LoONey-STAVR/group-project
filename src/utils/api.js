@@ -12,15 +12,15 @@ class Api {
         return result.ok ? result.json() : Promise.reject(new Error(`Что то пошло не так`));
     }
 
-    getTrending(limit) {
-        return this._request(`trending`, `limit=${limit}`);
+    getTrending(parametrs) {
+        return this._request(`trending`, `${parametrs}`);
     }
 
-    getSearch(value) {
-        return this._request('search', `q=${value}`);
+    getSearch(parametrs) {
+        return this._request('search', `${parametrs}`);
     }
     getRandomGif() {
-        return this._request("random")
+        return this._request('random');
     }
 }
 
