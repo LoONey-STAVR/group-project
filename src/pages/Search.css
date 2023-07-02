@@ -11,17 +11,16 @@
 }
 .search {
     display: flex;
-    flex-wrap: wrap;
     flex-direction: column;
     flex: 1 1 100%;
     gap: 10px;
-    align-items: center;
     position: relative;
 }
 
 .search__empty {
     margin: 0 auto;
     font-size: 18px;
+    text-align: center;
     color: wheat;
     width: 100%;
 }
@@ -31,7 +30,7 @@
     height: 50px;
     background: linear-gradient(#000, #262626);
     border-radius: 10px;
-    margin: 0 0 60px;
+    margin: 0 auto 60px;
 }
 
 .search__shadow:before,
@@ -75,13 +74,7 @@
     color: #fff;
     padding: 0 10px;
 }
-.search__cards {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 0 auto;
-    justify-content: center;
-    gap: 20px;
-}
+
 @media (max-width: 767px) {
     .search__shadow {
         width: 400px;

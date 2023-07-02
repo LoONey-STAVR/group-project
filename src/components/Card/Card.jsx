@@ -2,6 +2,7 @@ import './Card.css';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import shareIcon from '../../images/share.svg';
+import '../../css/animation-ascent.css';
 
 //
 function Card({ card, onCard = null }) {
@@ -27,17 +28,18 @@ function Card({ card, onCard = null }) {
             className='card animation-ascent'
             style={{ backgroundImage: `url(${card.images.downsized.url})` }}
         >
-            <div
+            <button
+                disabled={isCopy}
                 onClick={handleShare}
                 style={{
                     backgroundImage: `url(${shareIcon})`,
                 }}
-                className='card__share'
-            ></div>
+                className={`card__share ${isCopy && 'card__share_disabled'}`}
+            ></button>
             <div className='card__title-zone'>
                 <h2 className='card__title'>{card.title ? card.title : 'GIF'}</h2>
             </div>
-            {isCopy && <div className='card__tooltip animation-ascent'>Ссылка скопирована</div>}
+            {isCopy && <div className='card__tooltip'>Ссылка скопирована</div>}
         </Link>
     );
 }

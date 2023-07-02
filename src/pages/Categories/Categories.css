@@ -1,14 +1,17 @@
 .categories {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
     width: 100%;
     margin: 0 auto;
     justify-content: center;
-    align-items: center;
     position: relative;
 }
-
+.categories__list {
+    display: flex;
+    padding: 0;
+    list-style: none;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
 .category {
     cursor: pointer;
     padding: 10px 15px;
@@ -18,7 +21,6 @@
     margin: 0;
     transition: all 0.5s ease;
 }
-
 
 .category:hover {
     box-shadow: 0 0 20px white;

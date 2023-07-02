@@ -4,8 +4,10 @@ class Api {
         this._apiKey = options.apiKey;
     }
 
-    _request(path, parametrs) {
-        return fetch(`${this._baseURL}/${path}?api_key=${this._apiKey}&${parametrs}`).then(this._getResult);
+    _request(path, parametrs = '') {
+        return fetch(`${this._baseURL}/${path}?api_key=${this._apiKey}${parametrs && '&' + parametrs}`).then(
+            this._getResult
+        );
     }
 
     _getResult(result) {

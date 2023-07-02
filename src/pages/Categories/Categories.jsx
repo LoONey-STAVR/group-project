@@ -1,8 +1,8 @@
 import React from 'react';
 import './Categories.css';
 import { useEffect } from 'react';
-import Card from '../../components/Card/Card';
 import backIcon from '../../images/bkac.svg';
+import Cards from '../../components/Cards/Cards';
 function Categories({ onBack, categories, onCategories, cards, onCard, onSubcategory }) {
     const [isActive, setIsActive] = React.useState(true);
     const [currentSubcategories, setCurrentSubcategories] = React.useState([]);
@@ -39,29 +39,26 @@ function Categories({ onBack, categories, onCategories, cards, onCard, onSubcate
                 ></button>
             )}
             {cards.length === 0 ? (
-                categories.map((el, index) => (
-                    <p
-                        key={index}
-                        index={index}
-                        onClick={(e) => {
-                            !isActive ? handleCategory(index) : handleSubcategory(e);
-                        }}
-                        id={el.name}
-                        className={`category ${isActive && 'subcategory'} animation-ascent`}
-                    >
-                        {el.name}
-                    </p>
-                ))
-            ) : (
-                <div className='categories__cards'>
-                    {cards.map((card, index) => (
-                        <Card
+                <ul className='categories__list'>
+                    {categories.map((el, index) => (
+                        <p
                             key={index}
-                            card={card}
-                            onCard={onCard}
-                        />
+                            index={index}
+                            onClick={(e) => {
+                                !isActive ? handleCategory(index) : handleSubcategory(e);
+                            }}
+                            id={el.name}
+                            className={`category ${isActive && 'subcategory'} animation-ascent`}
+                        >
+                            {el.name}
+                        </p>
                     ))}
-                </div>
+                </ul>
+            ) : (
+                <Cards
+                    cards={cards}
+                    onCard={onCard}
+                />
             )}
         </div>
     );
