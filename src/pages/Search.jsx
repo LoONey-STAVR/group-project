@@ -1,4 +1,4 @@
-import styles from './Search.module.css';
+import './Search.css';
 import Card from '../components/Card/Card';
 
 function Search({ cards, searchValue, onChange, onShare, onCard }) {
@@ -6,17 +6,17 @@ function Search({ cards, searchValue, onChange, onShare, onCard }) {
         onChange(e.target.value);
     }
     return (
-        <main className={styles.content}>
-            <div className={styles.shadow}>
+        <section className='search'>
+            <div className='search__shadow'>
                 <input
-                    className={styles.input}
+                    className='search__input'
                     type='text'
                     value={searchValue}
                     onChange={handleChangeInput}
                 />
             </div>
             {cards.length > 0 ? (
-                <div className={styles.cards}>
+                <div className='search__cards'>
                     {cards.map((card, index) => (
                         <Card
                             onShare={onShare}
@@ -27,9 +27,9 @@ function Search({ cards, searchValue, onChange, onShare, onCard }) {
                     ))}
                 </div>
             ) : (
-                <h2 className={styles.title}></h2>
+                <h2 className='search__title'>Список пуст</h2>
             )}
-        </main>
+        </section>
     );
 }
 export default Search;

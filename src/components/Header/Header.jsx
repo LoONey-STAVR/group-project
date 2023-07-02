@@ -1,13 +1,13 @@
-import styles from './Header.module.css';
+import './Header.css';
 import logo from '../../images/logo.png';
 import Navigate from '../Navigate/Navigate';
 function Header({ onRandom, onTrend, onLink }) {
     return (
-        <div className={styles.header}>
+        <div className='header'>
             <img
                 src={logo}
                 alt='Логотип'
-                className={styles.logo}
+                className='header__logo'
             />
             <Navigate
                 onLink={onLink}

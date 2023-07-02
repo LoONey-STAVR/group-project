@@ -1,0 +1,98 @@
+@keyframes amimate {
+    0% {
+        background-position: 0 0;
+    }
+    50% {
+        background-position: 50% 0;
+    }
+    100% {
+        background-position: 0 0;
+    }
+}
+.search {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    flex: 1 1 100%;
+    gap: 10px;
+    align-items: center;
+    position: relative;
+}
+
+.search__empty {
+    margin: 0 auto;
+    font-size: 18px;
+    color: wheat;
+    width: 100%;
+}
+.search__shadow {
+    position: relative;
+    width: 500px;
+    height: 50px;
+    background: linear-gradient(#000, #262626);
+    border-radius: 10px;
+    margin: 0 0 60px;
+}
+
+.search__shadow:before,
+.search__shadow:after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    bottom: -2px;
+    left: -2px;
+    background: linear-gradient(
+        45deg,
+        #fb0094,
+        #0000ff,
+        #00ff00,
+        #ffff00,
+        #ff0000,
+        #fb0094,
+        #0000ff,
+        #00ff00,
+        #ffff00,
+        #ff0000
+    );
+    background-size: 500%;
+    z-index: -1;
+    animation: amimate 30s linear alternate-reverse infinite;
+    border-radius: 10px;
+}
+.search__shadow:after {
+    filter: blur(10px);
+}
+
+.search__input {
+    all: unset;
+    font-family: 'Pacifico', cursive;
+    text-align: center;
+    width: 100%;
+    line-height: 50px;
+    font-size: 24px;
+    font-weight: 600;
+    color: #fff;
+    padding: 0 10px;
+}
+.search__cards {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    justify-content: center;
+    gap: 20px;
+}
+@media (max-width: 767px) {
+    .search__shadow {
+        width: 400px;
+    }
+}
+@media (max-width: 520px) {
+    .search__shadow {
+        width: 280px;
+        margin: 0 0 30px;
+    }
+    .search__input {
+        width: calc(100% - 10px);
+    }
+}

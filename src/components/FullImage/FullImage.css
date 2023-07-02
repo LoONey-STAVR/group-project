@@ -1,0 +1,41 @@
+.full-image {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+}
+
+.full-image__image {
+    background-position: center;
+    background-size: cover;
+    background-repeat: none;
+    margin: 0 auto;
+    width: 50%;
+    height: 500px;
+    border-radius: 20px;
+    margin-top: 10px;
+}
+
+.full-image__title {
+    text-align: center;
+    margin: 10px auto 0;
+    text-transform: uppercase;
+}
+
+.full-image__back-btn {
+    position: absolute;
+    top: 25px;
+    cursor: pointer;
+    transition: filter 0.1s linear;
+    right: 50px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 75px;
+    height: 50px;
+    filter: drop-shadow(0px 0px 5px rgba(214, 215, 230, 0.87));
+}
+
+.full-image__back-btn:hover {
+    filter: drop-shadow(0px 0px 15px rgba(214, 215, 230, 0.87));
+}

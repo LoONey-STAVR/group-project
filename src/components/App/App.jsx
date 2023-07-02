@@ -9,6 +9,7 @@ import Trends from '../../pages/Trends';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import Card from '../Card/Card';
+import FullImage from '../FullImage/FullImage';
 function App() {
     const [cards, setCards] = useState([]);
     const [searchValue, setSearchValue] = useState('');
@@ -93,6 +94,11 @@ function App() {
         handleLink(getRandomGif);
     }
 
+    function handleBack() {
+        window.addEventListener('scroll', scrollHandler);
+        window.history.go(-1);
+    }
+
     return (
         <>
             <Header
@@ -125,22 +131,21 @@ function App() {
                 ></Route>
                 <Route
                     path='/random'
-                    element={<Random card={randomGif} handleClickBtn={handleRandomGifClick} />}
+                    element={
+                        <Random
+                            card={randomGif}
+                            handleClickBtn={handleRandomGifClick}
+                        />
+                    }
                 />
                 {previewCard.id && (
                     <Route
                         path={`/${previewCard.id}`}
                         element={
-                            <div className='full-image'>
-                                <Card
-                                    onShare={handleShare}
-                                    card={previewCard}
-                                    onCard={() => {
-                                        window.addEventListener('scroll', scrollHandler);
-                                        window.history.go(-1);
-                                    }}
-                                />
-                            </div>
+                            <FullImage
+                                onBack={handleBack}
+                                card={previewCard}
+                            />
                         }
                     ></Route>
                 )}
