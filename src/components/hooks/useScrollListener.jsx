@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
+import useThrottle from './useThrottle';
 export default function useScrollListener(cards, totalCount) {
     const [fetching, setFetching] = React.useState(false);
     const location = useLocation();
@@ -13,22 +14,24 @@ export default function useScrollListener(cards, totalCount) {
                 e.target.documentElement.scrollHeight > 2000 &&
                 totalCount !== cards.length
             ) {
+                console.log('fetch');
                 setFetching(true);
             } else {
                 setFetching(false);
             }
         },
-        [totalCount, cards]
+        [totalCount, cards.length]
     );
+
     useEffect(() => {
-        window.addEventListener('scroll', scrollHandler);
-        if ((location.pathname === '/random' || totalCount, cards.length)) {
+        if (location.pathname === '/random' || totalCount === cards.length || fetching) {
             window.removeEventListener('scoll', scrollHandler);
         }
+        window.addEventListener('scroll', scrollHandler);
         return () => {
             window.removeEventListener('scroll', scrollHandler);
         };
-    }, [fetching, location.pathname, scrollHandler]);
+    }, [fetching, location.pathname, scrollHandler, cards.length, totalCount]);
 
-    return [fetching, setFetching, scrollHandler];
+    return [fetching, setFetching];
 }
