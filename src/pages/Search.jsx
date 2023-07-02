@@ -7,12 +7,14 @@ function Search({ cards, searchValue, onChange, onShare, onCard }) {
     }
     return (
         <main className={styles.content}>
-            <input
-                className={styles.input}
-                type='text'
-                value={searchValue}
-                onChange={handleChangeInput}
-            />
+            <div className={styles.shadow}>
+                <input
+                    className={styles.input}
+                    type='text'
+                    value={searchValue}
+                    onChange={handleChangeInput}
+                />
+            </div>
             {cards.length > 0 ? (
                 <div className={styles.cards}>
                     {cards.map((card, index) => (

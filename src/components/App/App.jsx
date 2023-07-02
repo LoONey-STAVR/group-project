@@ -125,7 +125,7 @@ function App() {
                 ></Route>
                 <Route
                     path='/random'
-                    element={<Random card={randomGif} />}
+                    element={<Random card={randomGif} handleClickBtn={handleRandomGifClick} />}
                 />
                 {previewCard.id && (
                     <Route
