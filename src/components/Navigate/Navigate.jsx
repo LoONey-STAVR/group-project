@@ -26,6 +26,13 @@ function Navigate({ onRandom, onTrend, onLink }) {
             >
                 Случайный гиф
             </Link>
+            <Link
+                className={`nav-menu__link ${location.pathname === '/categories' && 'nav-menu__link_active'}`}
+                to='/categories'
+                onClick={location.pathname !== '/random' && onRandom}
+            >
+                Категории
+            </Link>
         </nav>
     );
 }

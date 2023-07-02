@@ -1,6 +1,12 @@
-
 .trends {
     display: flex;
-    gap: 10px;
+    gap: 30px;
+    flex-direction: column;
+
+}
+
+.trends__cards {
+    display: flex;
     flex-wrap: wrap;
+    gap:10px;
 }

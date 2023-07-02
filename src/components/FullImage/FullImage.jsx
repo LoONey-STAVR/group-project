@@ -2,7 +2,7 @@ import React from 'react';
 import './FullImage.css';
 import iconBack from '../../images/back.svg';
 function FullImage({ onBack, card }) {
-    console.log(card);
+
     return (
         <section className='full-image'>
             <div

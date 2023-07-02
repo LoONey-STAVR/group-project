@@ -22,6 +22,14 @@ class Api {
     getRandomGif() {
         return this._request('random');
     }
+
+    getCategory() {
+        return this._request('categories');
+    }
+
+    getSerchTag(parametrs) {
+        return this._request(`search/tags`, `${parametrs}`);
+    }
 }
 
 const api = new Api({ baseURL: 'https://api.giphy.com/v1/gifs', apiKey: 'nJXfAbJKRU6yP8wDDe0WF0H85H1iPu9I' });

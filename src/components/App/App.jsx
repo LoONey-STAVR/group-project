@@ -10,6 +10,8 @@ import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import Card from '../Card/Card';
 import FullImage from '../FullImage/FullImage';
+import Categories from '../../pages/Categories/Categories';
+
 function App() {
     const [cards, setCards] = useState([]);
     const [searchValue, setSearchValue] = useState('');
@@ -19,7 +21,7 @@ function App() {
     const navigate = useNavigate();
     const location = useLocation();
     const [previewCard, setPrevieCard] = useState({});
-    const [share, setShare] = useState('');
+    const [categories, setCategories] = useState([]);
     const scrollHandler = (e) => {
         if (
             e.target.documentElement.scrollHeight - (e.target.documentElement.scrollTop + window.innerHeight) ===
@@ -30,6 +32,15 @@ function App() {
             setFetching(false);
         }
     };
+
+    function handleCategory(newArray) {
+        setCategories(newArray);
+    }
+
+    function handleBackCategories() {
+        api.getCategory().then(({ data }) => setCategories(data));
+        setCards([]);
+    }
 
     useEffect(() => {
         window.addEventListener('scroll', scrollHandler);
@@ -54,9 +65,9 @@ function App() {
 
     function getCards() {
         function getResponce() {
-            return api.getTrending(`offset=${currenQuery}`).then((res) => {
-                setCards((prev) => [...prev, ...res.data]);
-                setCurrentQuery((prev) => prev + 50);
+            return api.getTrending(`offset=${currenQuery}&limit=20`).then((res) => {
+                setCards((prev) => [...prev, ...res.data.filter((el) => el.username !== '')]);
+                setCurrentQuery((prev) => prev + 20);
                 setFetching(false);
             });
         }
@@ -69,6 +80,21 @@ function App() {
         setCurrentQuery(0);
         setPrevieCard({});
         setSearchValue('');
+        handleBackCategories();
+    }
+
+    useEffect(() => {
+        api.getCategory().then(({ data }) => {
+            setCategories(data);
+            console.log(data);
+        });
+    }, []);
+
+    function handleSubCategory(tag) {
+        api.getSearch(`q=${tag}&limit=30`).then(({ data }) => {
+            console.log(data);
+            setCards(data);
+        });
     }
 
     useEffect(() => {
@@ -149,6 +175,20 @@ function App() {
                         }
                     ></Route>
                 )}
+                <Route
+                    path='/categories'
+                    element={
+                        <Categories
+                            cards={cards}
+                            onSubcategory={handleSubCategory}
+                            onShare={handleShare}
+                            onCard={setPrevieCard}
+                            onCategories={handleCategory}
+                            categories={categories}
+                            onBack={handleBackCategories}
+                        />
+                    }
+                ></Route>
             </Routes>
         </>
     );
