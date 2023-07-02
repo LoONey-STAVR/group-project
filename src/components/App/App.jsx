@@ -1,4 +1,5 @@
 import './App.css';
+import '../../css/animation-ascent.css';
 import Header from '../Header/Header';
 import Search from '../../pages/Search';
 import { useEffect, useState } from 'react';
@@ -11,27 +12,21 @@ import { useLocation } from 'react-router-dom';
 import Card from '../Card/Card';
 import FullImage from '../FullImage/FullImage';
 import Categories from '../../pages/Categories/Categories';
+import React from 'react';
+import useScrollListener from '../hooks/useScrollListener';
 
 function App() {
     const [cards, setCards] = useState([]);
+    const [totalCount, setTotalCount] = useState(0);
     const [searchValue, setSearchValue] = useState('');
     const [randomGif, setRandomGif] = useState({});
-    const [fetching, setFetching] = useState(false);
+    const [fetching, setFetching, scrollHandler] = useScrollListener(cards, totalCount);
     const [currenQuery, setCurrentQuery] = useState(0);
     const navigate = useNavigate();
     const location = useLocation();
     const [previewCard, setPrevieCard] = useState({});
     const [categories, setCategories] = useState([]);
-    const scrollHandler = (e) => {
-        if (
-            e.target.documentElement.scrollHeight - (e.target.documentElement.scrollTop + window.innerHeight) ===
-            0
-        ) {
-            setFetching(true);
-        } else {
-            setFetching(false);
-        }
-    };
+    const [subCategory, setSubcategory] = React.useState('');
 
     function handleCategory(newArray) {
         setCategories(newArray);
@@ -42,88 +37,110 @@ function App() {
         setCards([]);
     }
 
-    useEffect(() => {
-        window.addEventListener('scroll', scrollHandler);
-        return () => {
-            window.removeEventListener('scroll', scrollHandler);
-        };
-    }, [fetching]);
-
-    useEffect(() => {
-        if (fetching) {
-            window.removeEventListener('scroll', scrollHandler);
-            if (location.pathname === '/trends') {
-                getCards();
-            }
-        }
-    }, [fetching, cards]);
-
-    useEffect(() => {
-        navigate('/search', { replace: true });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    function getCards() {
-        function getResponce() {
-            return api.getTrending(`offset=${currenQuery}&limit=20`).then((res) => {
-                setCards((prev) => [...prev, ...res.data.filter((el) => el.username !== '')]);
-                setCurrentQuery((prev) => prev + 20);
-                setFetching(false);
-            });
-        }
-
-        handleLink(getResponce);
-    }
-
     function resetCards() {
         setCards((prev) => []);
         setCurrentQuery(0);
         setPrevieCard({});
         setSearchValue('');
         handleBackCategories();
+        setTotalCount(0);
+        setSubcategory('');
     }
-
-    useEffect(() => {
-        api.getCategory().then(({ data }) => {
-            setCategories(data);
-            console.log(data);
-        });
-    }, []);
 
     function handleSubCategory(tag) {
-        api.getSearch(`q=${tag}&limit=30`).then(({ data }) => {
-            console.log(data);
-            setCards(data);
-        });
+        setSubcategory(tag);
+        function getResponce() {
+            return api.getSearch(`q=${tag}&offset=${currenQuery}`).then((res) => {
+                setCurrentQuery((prev) => prev + res.data.length);
+                setTotalCount(res.pagination.total_count);
+                setCards((prev) => [...prev, ...res.data]);
+                setFetching(false);
+            });
+        }
+        handleFetch(getResponce);
     }
-
-    useEffect(() => {
-        searchValue ? api.getSearch(`q=${searchValue}`).then(({ data }) => setCards(data)) : setCards([]);
-    }, [searchValue]);
 
     function handleTrends() {
         resetCards();
-        getCards();
+        function getResponce() {
+            return api.getTrending(`offset=${currenQuery}`).then((res) => {
+                setCards((prev) => [...prev, ...res.data.filter((el) => el.username !== '')]);
+                setCurrentQuery((prev) => prev + res.data.length);
+                setFetching(false);
+                setTotalCount(res.pagination.total_count);
+            });
+        }
+
+        handleFetch(getResponce);
     }
-    function handleShare(card) {
-        navigator.clipboard.writeText(card.url);
-    }
-    function handleLink(request) {
+
+    function handleFetch(request) {
         request().then().catch(console.error);
     }
 
     function handleRandomGifClick() {
         resetCards();
-        function getRandomGif() {
+        function getResponce() {
             return api.getRandomGif().then((res) => setRandomGif(res.data));
         }
-        handleLink(getRandomGif);
+        handleFetch(getResponce);
     }
 
-    function handleBack() {
-        window.addEventListener('scroll', scrollHandler);
-        window.history.go(-1);
+    function handleChangeSearchValue() {
+        function getResponce() {
+            return api.getSearch(`q=${searchValue}`).then((res) => {
+                setCards(res.data);
+                setCurrentQuery(res.data.length);
+                setTotalCount(res.pagination.total_count);
+            });
+        }
+        handleFetch(getResponce);
     }
+
+    function getNextSearchCards() {
+        function getResponce() {
+            return api.getSearch(`q=${searchValue}&offset=${currenQuery}`).then((res) => {
+                setCards((prev) => [...prev, ...res.data]);
+                setCurrentQuery((prev) => prev + res.data.length);
+                setFetching(false);
+            });
+        }
+
+        handleFetch(getResponce);
+    }
+
+    useEffect(() => {
+        if (searchValue) {
+            setCurrentQuery((prev) => prev - prev);
+            handleChangeSearchValue();
+        }
+        setCards([]);
+        setCurrentQuery(0);
+    }, [searchValue]);
+
+    useEffect(() => {
+        if (fetching) {
+            window.removeEventListener('scroll', scrollHandler);
+            if (location.pathname === '/trends') {
+                handleTrends();
+            }
+            if (location.pathname === '/search' && searchValue) {
+                getNextSearchCards();
+            }
+            if (location.pathname === '/categories') {
+                handleSubCategory(subCategory);
+            }
+            setFetching(false);
+        }
+    }, [fetching, cards, scrollHandler]);
+
+    useEffect(() => {
+        navigate('/search', { replace: true });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        api.getCategory().then(({ data }) => {
+            setCategories(data);
+        });
+    }, []);
 
     return (
         <>
@@ -137,7 +154,6 @@ function App() {
                     path='/search'
                     element={
                         <Search
-                            onShare={handleShare}
                             onChange={setSearchValue}
                             searchValue={searchValue}
                             cards={cards}
@@ -149,7 +165,6 @@ function App() {
                     path='/trends'
                     element={
                         <Trends
-                            onShare={handleShare}
                             onCard={setPrevieCard}
                             cards={cards}
                         />
@@ -167,12 +182,7 @@ function App() {
                 {previewCard.id && (
                     <Route
                         path={`/${previewCard.id}`}
-                        element={
-                            <FullImage
-                                onBack={handleBack}
-                                card={previewCard}
-                            />
-                        }
+                        element={<FullImage card={previewCard} />}
                     ></Route>
                 )}
                 <Route
@@ -181,7 +191,6 @@ function App() {
                         <Categories
                             cards={cards}
                             onSubcategory={handleSubCategory}
-                            onShare={handleShare}
                             onCard={setPrevieCard}
                             onCategories={handleCategory}
                             categories={categories}

@@ -1,10 +1,11 @@
 import './Search.css';
 import Card from '../components/Card/Card';
 
-function Search({ cards, searchValue, onChange, onShare, onCard }) {
+function Search({ cards, searchValue, onChange, onCard }) {
     function handleChangeInput(e) {
         onChange(e.target.value);
     }
+    
     return (
         <section className='search'>
             <div className='search__shadow'>
@@ -19,7 +20,6 @@ function Search({ cards, searchValue, onChange, onShare, onCard }) {
                 <div className='search__cards'>
                     {cards.map((card, index) => (
                         <Card
-                            onShare={onShare}
                             key={index}
                             card={card}
                             onCard={onCard}

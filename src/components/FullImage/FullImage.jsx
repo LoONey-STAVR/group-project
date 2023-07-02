@@ -2,7 +2,9 @@ import React from 'react';
 import './FullImage.css';
 import iconBack from '../../images/back.svg';
 function FullImage({ onBack, card }) {
-
+    function handleBack() {
+        window.history.go(-1);
+    }
     return (
         <section className='full-image'>
             <div
@@ -12,7 +14,7 @@ function FullImage({ onBack, card }) {
                 className='full-image__image'
             >
                 <div
-                    onClick={onBack}
+                    onClick={handleBack}
                     style={{
                         backgroundImage: `url(${iconBack})`,
                     }}

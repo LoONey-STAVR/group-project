@@ -11,12 +11,14 @@
 
 .category {
     cursor: pointer;
-    border: 2px solid white;
-    padding: 6px 15px;
+    padding: 10px 15px;
     border-radius: 20px;
     font-size: 24px;
-    background-color: rgb(29, 41, 207);
+    background-color: rgba(8, 16, 129, 0.801);
+    margin: 0;
+    transition: all 0.5s ease;
 }
+
 
 .category:hover {
     box-shadow: 0 0 20px white;
@@ -43,11 +45,10 @@
     background-color: rgb(16, 133, 55);
 }
 
-
 .categories__cards {
     display: flex;
     flex-wrap: wrap;
     width: 100%;
     justify-content: center;
-    gap:20px;
+    gap: 20px;
 }

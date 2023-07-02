@@ -3,11 +3,11 @@ import './Categories.css';
 import { useEffect } from 'react';
 import Card from '../../components/Card/Card';
 import backIcon from '../../images/bkac.svg';
-function Categories({ onBack, categories, onCategories, cards, onCard, onShare, onSubcategory }) {
+function Categories({ onBack, categories, onCategories, cards, onCard, onSubcategory }) {
     const [isActive, setIsActive] = React.useState(true);
-    const [currentCategory, setCurrentCategory] = React.useState([]);
+    const [currentSubcategories, setCurrentSubcategories] = React.useState([]);
     function handleCategory(index) {
-        setCurrentCategory(categories[index].subcategories);
+        setCurrentSubcategories(categories[index].subcategories);
     }
     function handleSubcategory(e) {
         onSubcategory(e.target.id);
@@ -15,17 +15,17 @@ function Categories({ onBack, categories, onCategories, cards, onCard, onShare, 
     function handleBack() {
         onBack();
         setIsActive(false);
-        setCurrentCategory([]);
+        setCurrentSubcategories([]);
     }
 
     useEffect(() => {
-        if (currentCategory.length === 0) {
+        if (currentSubcategories.length === 0) {
             setIsActive(false);
         } else {
-            onCategories(currentCategory);
+            onCategories(currentSubcategories);
             setIsActive(true);
         }
-    }, [currentCategory, isActive]);
+    }, [currentSubcategories, isActive]);
 
     return (
         <div className='categories'>
@@ -47,7 +47,7 @@ function Categories({ onBack, categories, onCategories, cards, onCard, onShare, 
                             !isActive ? handleCategory(index) : handleSubcategory(e);
                         }}
                         id={el.name}
-                        className={`category ${isActive && 'subcategory'}`}
+                        className={`category ${isActive && 'subcategory'} animation-ascent`}
                     >
                         {el.name}
                     </p>
@@ -59,7 +59,6 @@ function Categories({ onBack, categories, onCategories, cards, onCard, onShare, 
                             key={index}
                             card={card}
                             onCard={onCard}
-                            onShare={onShare}
                         />
                     ))}
                 </div>
