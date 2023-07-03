@@ -1,20 +1,17 @@
 import React from 'react';
+import useThrottle from './useThrottle';
 import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
-import useThrottle from './useThrottle';
 export default function useScrollListener(cards, totalCount) {
     const [fetching, setFetching] = React.useState(false);
     const location = useLocation();
     const scrollHandler = React.useCallback(
         (e) => {
             if (
-                e.target.documentElement.scrollHeight -
-                    (e.target.documentElement.scrollTop + window.innerHeight) ===
-                    0 &&
-                e.target.documentElement.scrollHeight > 2000 &&
+                e.target.documentElement.scrollHeight - (e.target.documentElement.scrollTop + window.innerHeight) <
+                    200 &&
                 totalCount !== cards.length
             ) {
-                console.log('fetch');
                 setFetching(true);
             } else {
                 setFetching(false);
@@ -23,15 +20,16 @@ export default function useScrollListener(cards, totalCount) {
         [totalCount, cards.length]
     );
 
-    useEffect(() => {
-        if (location.pathname === '/random' || totalCount === cards.length || fetching) {
-            window.removeEventListener('scoll', scrollHandler);
-        }
-        window.addEventListener('scroll', scrollHandler);
-        return () => {
-            window.removeEventListener('scroll', scrollHandler);
-        };
-    }, [fetching, location.pathname, scrollHandler, cards.length, totalCount]);
+
+    // useEffect(() => {
+    //     if (location.pathname === '/random' || totalCount === cards.length || fetching) {
+    //         window.removeEventListener('scoll', scrollHandler);
+    //     }
+    //     window.addEventListener('scroll', scrollHandler);
+    //     return () => {
+    //         window.removeEventListener('scroll', scrollHandler);
+    //     };
+    // }, [fetching, location.pathname, scrollHandler, cards.length, totalCount]);
 
     return [fetching, setFetching];
 }

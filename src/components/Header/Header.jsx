@@ -4,11 +4,11 @@ import Navigate from '../Navigate/Navigate';
 function Header({ onRandom, onTrend, onLink }) {
     return (
         <div className='header'>
-            <img
+            {/* <img
                 src={logo}
                 alt='Логотип'
                 className='header__logo'
-            />
+            /> */}
             <Navigate
                 onLink={onLink}
                 onTrend={onTrend}

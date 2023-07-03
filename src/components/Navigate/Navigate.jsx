@@ -29,7 +29,7 @@ function Navigate({ onRandom, onTrend, onLink }) {
             <Link
                 className={`nav-menu__link ${location.pathname === '/categories' && 'nav-menu__link_active'}`}
                 to='/categories'
-                onClick={location.pathname !== '/random' && onRandom}
+                onClick={location.pathname !== '/categories' && onLink}
             >
                 Категории
             </Link>

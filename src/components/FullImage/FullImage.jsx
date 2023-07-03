@@ -1,7 +1,8 @@
 import React from 'react';
 import './FullImage.css';
 import iconBack from '../../images/back.svg';
-function FullImage({ onBack, card }) {
+function FullImage({ card }) {
+    console.log(card);
     function handleBack() {
         window.history.go(-1);
     }
@@ -9,7 +10,7 @@ function FullImage({ onBack, card }) {
         <section className='full-image'>
             <div
                 style={{
-                    backgroundImage: `url(${card.images.downsized.url})`,
+                    backgroundImage: `url(${card.images.original.webp})`,
                 }}
                 className='full-image__image'
             >

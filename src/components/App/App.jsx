@@ -14,7 +14,6 @@ import Categories from '../../pages/Categories/Categories';
 import React from 'react';
 import useScrollListener from '../hooks/useScrollListener';
 import useDebounce from '../hooks/useDebounce';
-import useThrottle from '../hooks/useThrottle';
 
 function App() {
     const [cards, setCards] = useState([]);
@@ -38,15 +37,15 @@ function App() {
         api.getCategory().then(({ data }) => setCategories(data));
         setCards([]);
     }
-    function resetCards() {
+    const resetCards = React.useCallback(() => {
         setCards((prev) => []);
-        setCurrentQuery(0);
+        setCurrentQuery((prev) => prev - prev);
         setPrevieCard({});
         setSearchValue('');
         handleBackCategories();
         setTotalCount(0);
         setSubcategory('');
-    }
+    }, []);
 
     const handleSubCategory = React.useCallback(
         (tag) => {
@@ -64,7 +63,7 @@ function App() {
         [currenQuery, setFetching]
     );
 
-    const handleTrends = React.useCallback(() => {
+    const getNextTrendingCards = React.useCallback(() => {
         function getResponce() {
             return api.getTrending(`offset=${currenQuery}`).then((res) => {
                 setCards((prev) => [...prev, ...res.data.filter((el) => el.username !== '')]);
@@ -73,15 +72,25 @@ function App() {
                 setTotalCount(res.pagination.total_count);
             });
         }
-
         handleFetch(getResponce);
     }, [currenQuery, setFetching]);
+    const handleTrends = React.useCallback(() => {
+        function getResponce() {
+            return api.getTrending(``).then((res) => {
+                setFetching(false);
+                setCards((prev) => [...res.data.filter((el) => el.username !== '')]);
+                setCurrentQuery((prev) => res.data.length);
+                setTotalCount(res.pagination.total_count);
+            });
+        }
+        handleFetch(getResponce);
+    }, [setFetching]);
+
     function handleFetch(request) {
         request().then().catch(console.error);
     }
 
     function handleRandomGifClick() {
-        resetCards();
         function getResponce() {
             return api.getRandomGif().then((res) => setRandomGif(res.data));
         }
@@ -122,7 +131,7 @@ function App() {
     useEffect(() => {
         if (fetching) {
             if (location.pathname === '/trends') {
-                handleTrends();
+                getNextTrendingCards();
             }
             if (location.pathname === '/search' && searchValue) {
                 getNextSearchCards();
@@ -133,6 +142,7 @@ function App() {
             setFetching(false);
         }
     }, [
+        getNextTrendingCards,
         fetching,
         cards,
         subCategory,

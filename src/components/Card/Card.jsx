@@ -10,7 +10,7 @@ function Card({ card, onCard = null }) {
     function handleShare(e) {
         e.stopPropagation();
         e.preventDefault();
-        navigator.clipboard.writeText(card.url);
+        navigator.clipboard.writeText(card.images.original.url);
         setIsCopy((prev) => !prev);
         setTimeout(() => {
             setIsCopy((prev) => !prev);
