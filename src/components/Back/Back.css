@@ -1,0 +1,15 @@
+.back {
+    all: unset;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    transition: all 0.3s linear;
+    cursor: pointer;
+}
+.back_full-image {
+    width: 75px;
+    height: 75px;
+}
+.back:hover {
+    opacity: 0.8;
+}

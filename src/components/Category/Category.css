@@ -1,0 +1,20 @@
+
+
+.category {
+    all:unset;
+    cursor: pointer;
+    padding: 10px 15px;
+    border-radius: 20px;
+    font-size: 24px;
+    background-color: rgba(8, 16, 129, 0.801);
+    margin: 0;
+    transition: all 0.5s ease;
+}
+
+.category:hover {
+    box-shadow: 0 0 20px white;
+}
+
+.category_subcategory {
+    background-color: rgb(16, 133, 55);
+}

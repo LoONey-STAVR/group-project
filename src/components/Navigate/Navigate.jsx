@@ -13,9 +13,9 @@ function Navigate({ onRandom, onTrend, onLink }) {
                 Поиск
             </Link>
             <Link
-                onClick={location.pathname !== '/trends' && onTrend}
-                className={`nav-menu__link ${location.pathname === '/trends' && 'nav-menu__link_active'}`}
-                to='/trends'
+                onClick={location.pathname !== '/' && onLink}
+                className={`nav-menu__link ${location.pathname === '/' && 'nav-menu__link_active'}`}
+                to='/'
             >
                 Тренды
             </Link>

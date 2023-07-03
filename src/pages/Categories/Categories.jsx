@@ -3,33 +3,41 @@ import './Categories.css';
 import { useEffect } from 'react';
 import backIcon from '../../images/bkac.svg';
 import Cards from '../../components/Cards/Cards';
-function Categories({ onBack, categories, onCategories, cards, onCard, onSubcategory }) {
+import Category from '../../components/Category/Category';
+function Categories({ categories, cards, onCard, onSubcategory, onBack }) {
     const [isActive, setIsActive] = React.useState(true);
-    const [currentSubcategories, setCurrentSubcategories] = React.useState([]);
-    function handleCategory(index) {
-        setCurrentSubcategories(categories[index].subcategories);
+
+    const [currentCategory, setCurrentCategory] = React.useState([]);
+
+    function handleCategory(e) {
+        const index = e.target.attributes.index.value;
+        setCurrentCategory(categories[index].subcategories);
     }
+
     function handleSubcategory(e) {
         onSubcategory(e.target.id);
     }
     function handleBack() {
-        onBack();
         setIsActive(false);
-        setCurrentSubcategories([]);
+        setCurrentCategory([]);
+        onBack();
     }
 
     useEffect(() => {
-        if (currentSubcategories.length === 0) {
+        if (currentCategory.length === 0) {
             setIsActive(false);
         } else {
-            onCategories(currentSubcategories);
             setIsActive(true);
         }
-    }, [currentSubcategories, isActive]);
+    }, [currentCategory, isActive]);
+
+    function isButtonActive() {
+        return isActive || cards.length > 0;
+    }
 
     return (
         <div className='categories'>
-            {isActive && (
+            {isButtonActive() && (
                 <button
                     onClick={handleBack}
                     style={{
@@ -40,19 +48,24 @@ function Categories({ onBack, categories, onCategories, cards, onCard, onSubcate
             )}
             {cards.length === 0 ? (
                 <ul className='categories__list'>
-                    {categories.map((el, index) => (
-                        <p
-                            key={index}
-                            index={index}
-                            onClick={(e) => {
-                                !isActive ? handleCategory(index) : handleSubcategory(e);
-                            }}
-                            id={el.name}
-                            className={`category ${isActive && 'subcategory'} animation-ascent`}
-                        >
-                            {el.name}
-                        </p>
-                    ))}
+                    {currentCategory.length === 0
+                        ? categories.map((el, index) => (
+                              <Category
+                                  name={el.name}
+                                  index={index}
+                                  key={index}
+                                  onCategory={handleCategory}
+                              />
+                          ))
+                        : currentCategory.map((el, index) => (
+                              <Category
+                                  name={el.name}
+                                  index={index}
+                                  key={index}
+                                  onCategory={handleSubcategory}
+                                  isSubcategory={true}
+                              />
+                          ))}
                 </ul>
             ) : (
                 <Cards

@@ -2,7 +2,7 @@ import './App.css';
 import '../../css/animation-ascent.css';
 import Header from '../Header/Header';
 import Search from '../../pages/Search';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import api from '../../utils/api';
 import Random from '../../pages/Random';
 import { Route, Routes } from 'react-router-dom';
@@ -13,82 +13,72 @@ import FullImage from '../FullImage/FullImage';
 import Categories from '../../pages/Categories/Categories';
 import React from 'react';
 import useScrollListener from '../hooks/useScrollListener';
-import useDebounce from '../hooks/useDebounce';
+import useCards from '../hooks/useCards';
 
 function App() {
-    const [cards, setCards] = useState([]);
-    const [totalCount, setTotalCount] = useState(0);
-    const [searchValue, setSearchValue] = useState('');
+    const {
+        cards,
+        categories,
+        searchValue,
+        subCategory,
+        previewCard,
+        totalCount,
+        currentQuery,
+        debouncedValue,
+        setNextCards,
+        resetCards,
+        setPrevieCard,
+        setNewCards,
+        setSearchValue,
+        setSubcategory,
+        setCategories,
+    } = useCards();
+
     const [randomGif, setRandomGif] = useState({});
-    const [fetching, setFetching] = useScrollListener(cards, totalCount);
-    const [currenQuery, setCurrentQuery] = useState(0);
+    const { fetching, setFetching } = useScrollListener(cards, totalCount);
     const navigate = useNavigate();
     const location = useLocation();
-    const [previewCard, setPrevieCard] = useState({});
-    const [categories, setCategories] = useState([]);
-    const [subCategory, setSubcategory] = React.useState('');
-    const debouncedValue = useDebounce(searchValue);
 
-    function handleCategory(newArray) {
-        setCategories(newArray);
-    }
-
-    function handleBackCategories() {
-        api.getCategory().then(({ data }) => setCategories(data));
-        setCards([]);
-    }
-    const resetCards = React.useCallback(() => {
-        setCards((prev) => []);
-        setCurrentQuery((prev) => prev - prev);
-        setPrevieCard({});
-        setSearchValue('');
-        handleBackCategories();
-        setTotalCount(0);
-        setSubcategory('');
+    const handleFetch = useCallback((request) => {
+        request().then().catch(console.error);
     }, []);
 
-    const handleSubCategory = React.useCallback(
-        (tag) => {
-            setSubcategory(tag);
+    useEffect(() => {
+        if (subCategory && cards.length === 0) {
             function getResponce() {
-                return api.getSearch(`q=${tag}&offset=${currenQuery}`).then((res) => {
-                    setCurrentQuery((prev) => prev + res.data.length);
-                    setTotalCount(res.pagination.total_count);
-                    setCards((prev) => [...prev, ...res.data]);
-                    setFetching(false);
-                });
+                return api.getSearch(`q=${subCategory}&offset=${currentQuery}`).then(setNewCards);
             }
             handleFetch(getResponce);
-        },
-        [currenQuery, setFetching]
-    );
+        }
+    }, [subCategory, currentQuery, cards.length, handleFetch, setNewCards]);
 
-    const getNextTrendingCards = React.useCallback(() => {
+    const getNextTrendingCards = useCallback(() => {
         function getResponce() {
-            return api.getTrending(`offset=${currenQuery}`).then((res) => {
-                setCards((prev) => [...prev, ...res.data.filter((el) => el.username !== '')]);
-                setCurrentQuery((prev) => prev + res.data.length);
-                setFetching(false);
-                setTotalCount(res.pagination.total_count);
-            });
+            return api.getTrending(`offset=${currentQuery}`).then(setNextCards);
         }
         handleFetch(getResponce);
-    }, [currenQuery, setFetching]);
-    const handleTrends = React.useCallback(() => {
+    }, [currentQuery, setNextCards, handleFetch]);
+
+    const getNextSubcategoriesCards = useCallback(() => {
         function getResponce() {
-            return api.getTrending(``).then((res) => {
-                setFetching(false);
-                setCards((prev) => [...res.data.filter((el) => el.username !== '')]);
-                setCurrentQuery((prev) => res.data.length);
-                setTotalCount(res.pagination.total_count);
-            });
+            return api.getSearch(`q=${subCategory}&offset=${currentQuery}`).then(setNextCards);
         }
         handleFetch(getResponce);
-    }, [setFetching]);
+    }, [currentQuery, subCategory, handleFetch, setNextCards]);
 
-    function handleFetch(request) {
-        request().then().catch(console.error);
-    }
+    const handleChangeSearchValue = React.useCallback(() => {
+        function getResponce() {
+            return api.getSearch(`q=${debouncedValue}&offset=${currentQuery}`).then(setNewCards);
+        }
+        handleFetch(getResponce);
+    }, [debouncedValue, handleFetch, setNewCards, currentQuery]);
+
+    const getNextSearchCards = React.useCallback(() => {
+        function getResponce() {
+            return api.getSearch(`q=${debouncedValue}&offset=${currentQuery}`).then(setNextCards);
+        }
+        handleFetch(getResponce);
+    }, [currentQuery, debouncedValue, handleFetch, setNextCards]);
 
     function handleRandomGifClick() {
         function getResponce() {
@@ -97,67 +87,46 @@ function App() {
         handleFetch(getResponce);
     }
 
-    const handleChangeSearchValue = React.useCallback(() => {
-        function getResponce() {
-            return api.getSearch(`q=${debouncedValue}`).then((res) => {
-                setCards(res.data);
-                setCurrentQuery(res.data.length);
-                setTotalCount(res.pagination.total_count);
-            });
-        }
-        handleFetch(getResponce);
-    }, [debouncedValue]);
-
-    const getNextSearchCards = React.useCallback(() => {
-        function getResponce() {
-            return api.getSearch(`q=${debouncedValue}&offset=${currenQuery}`).then((res) => {
-                setCards((prev) => [...prev, ...res.data]);
-                setCurrentQuery((prev) => prev + res.data.length);
-                setFetching(false);
-            });
-        }
-
-        handleFetch(getResponce);
-    }, [currenQuery, debouncedValue, setFetching]);
     useEffect(() => {
-        if (debouncedValue) {
-            setCurrentQuery((prev) => prev - prev);
-            handleChangeSearchValue();
+        if (location.pathname === '/' && cards.length === 0) {
+            function getResponce() {
+                return api.getTrending(`offset=${currentQuery}`).then(setNewCards);
+            }
+            handleFetch(getResponce);
         }
-        setCards([]);
-        setCurrentQuery(0);
-    }, [debouncedValue, handleChangeSearchValue]);
+    }, [location.pathname, cards.length, currentQuery, setNextCards, handleFetch, setNewCards]);
+
+    useEffect(() => {
+        handleChangeSearchValue();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [debouncedValue]);
 
     useEffect(() => {
         if (fetching) {
-            if (location.pathname === '/trends') {
+            setFetching(false);
+            if (location.pathname === '/') {
                 getNextTrendingCards();
             }
-            if (location.pathname === '/search' && searchValue) {
+            if (location.pathname === '/search') {
                 getNextSearchCards();
             }
             if (location.pathname === '/categories') {
-                handleSubCategory(subCategory);
+                console.log('f');
+                getNextSubcategoriesCards();
             }
-            setFetching(false);
         }
     }, [
+        getNextSubcategoriesCards,
         getNextTrendingCards,
         fetching,
-        cards,
-        subCategory,
-        searchValue,
         setFetching,
         location.pathname,
-        handleTrends,
-        navigate,
+
         getNextSearchCards,
-        handleSubCategory,
     ]);
 
     useEffect(() => {
-        navigate('/search', { replace: true });
-
+        navigate('/', { replace: true });
         api.getCategory().then(({ data }) => {
             setCategories(data);
         });
@@ -168,7 +137,6 @@ function App() {
         <>
             <Header
                 onLink={resetCards}
-                onTrend={handleTrends}
                 onRandom={handleRandomGifClick}
             />
             <Routes>
@@ -184,7 +152,7 @@ function App() {
                     }
                 ></Route>
                 <Route
-                    path='/trends'
+                    path='/'
                     element={
                         <Trends
                             onCard={setPrevieCard}
@@ -212,11 +180,11 @@ function App() {
                     element={
                         <Categories
                             cards={cards}
-                            onSubcategory={handleSubCategory}
+                            onSubcategory={setSubcategory}
                             onCard={setPrevieCard}
-                            onCategories={handleCategory}
+                            onCategories={setCategories}
                             categories={categories}
-                            onBack={handleBackCategories}
+                            onBack={resetCards}
                         />
                     }
                 ></Route>

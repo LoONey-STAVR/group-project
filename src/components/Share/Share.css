@@ -1,0 +1,15 @@
+.share {
+    all: unset;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    transition: all 0.3s linear;
+    cursor: pointer;
+}
+.share_full-image {
+    width: 75px;
+    height: 75px;
+}
+.share:hover {
+    opacity: 0.8;
+}
