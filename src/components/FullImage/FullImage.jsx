@@ -5,17 +5,21 @@ import Back from '../Back/Back';
 import HD from '../../images/hd.svg';
 
 function FullImage({ card }) {
+    const [isCopy, setIsCopy] = React.useState(false);
     const [image] = React.useState({
         url: card.images.original.url,
         width: card.images.original.width,
         height: card.images.original.height,
     });
 
-
     function handleBack() {
         window.history.go(-1);
     }
     function handleShare() {
+        setIsCopy(true);
+        setTimeout(() => {
+            setIsCopy((prev) => !prev);
+        }, 1500);
         navigator.clipboard.writeText(card.images.original.url);
     }
 
@@ -32,7 +36,9 @@ function FullImage({ card }) {
                         backgroundImage: `url(${card.user.avatar_url})`,
                     }}
                     className='full-image__avatar'
-                ></div>
+                >
+                    {isCopy && <div className='full-image__tooltip'>Ссылка скопирована</div>}
+                </div>
                 <Share
                     onShare={handleShare}
                     name='full-image'
@@ -46,8 +52,7 @@ function FullImage({ card }) {
                     height: `${image.height}px`,
                 }}
                 className='full-image__image'
-            >
-            </div>
+            ></div>
             <h2 className='full-image__title'>{card.title}</h2>
         </section>
     );

@@ -1,5 +1,5 @@
 import './App.css';
-import '../../css/animation-ascent.css';
+
 import Header from '../Header/Header';
 import Search from '../../pages/Search';
 import { useCallback, useEffect, useState } from 'react';

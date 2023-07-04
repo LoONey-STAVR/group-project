@@ -7,15 +7,18 @@ function Header({ onLink }) {
         return menuActive ? `${className} active` : className;
     }
     return (
-        <div className={addActiveClass("header")}>
+        <div className={addActiveClass('header')}>
             <div className='glitch'></div>
             <Navigate
                 onLink={onLink}
                 setMenuActive={setMenuActive}
                 addActiveClass={addActiveClass}
             />
-            <div onClick={() => setMenuActive(prev => !prev)} className={addActiveClass("header__menu")}>
-                <span className={addActiveClass("header__burger")}></span>
+            <div
+                onClick={() => setMenuActive((prev) => !prev)}
+                className={addActiveClass('header__menu')}
+            >
+                <span className={addActiveClass('header__burger')}></span>
             </div>
         </div>
     );

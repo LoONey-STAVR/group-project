@@ -1,15 +1,15 @@
-
-
 .category {
-    all:unset;
+    all: unset;
     cursor: pointer;
     padding: 10px 15px;
     border-radius: 20px;
-    font-size: 24px;
+    font-size: 20px;
     background-color: rgba(8, 16, 129, 0.801);
     margin: 0;
     transition: all 0.5s ease;
     text-align: center;
+    font-family: 'Russo One', sans-serif;
+  
 }
 
 .category:hover {

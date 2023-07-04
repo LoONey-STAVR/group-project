@@ -16,7 +16,6 @@
     gap: 10px;
     position: relative;
     justify-content: center;
-    align-items: center;
 }
 
 .search__empty {
@@ -67,7 +66,7 @@
 
 .search__input {
     all: unset;
-    font-family: 'Pacifico', cursive;
+    font-family: 'Russo One', sans-serif;
     text-align: center;
     width: 100%;
     line-height: 50px;

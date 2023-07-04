@@ -4,7 +4,8 @@ import { BrowserRouter } from 'react-router-dom';
 import './vendor/normalize.css';
 import App from './components/App/App';
 import './index.css';
-
+import './css/animation-ascent.css';
+import './css/no-highlight.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

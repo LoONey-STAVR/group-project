@@ -9,7 +9,7 @@ function Category({ name, index, onCategory, isSubcategory = false }) {
             index={index}
             onClick={onCategory}
             id={name}
-            className={`category ${isSubcategory && 'category_subcategory'} animation-ascent`}
+            className={`category ${isSubcategory && 'category_subcategory'} animation-ascent no-highlight`}
         >
             {name}
         </button>

@@ -19,7 +19,11 @@ export default function useCards() {
     }, []);
 
     function getFiltredCards(cards) {
-        const filtredCards = [...cards.filter((card) => card.user && card.title !== '')];
+        const filtredCards = [
+            ...cards.filter(
+                (card) => card.user && card.title !== '' && !cards.every((el) => el.title === card.title)
+            ),
+        ];
         const notFiltredCardsLength = cards.length - filtredCards.length;
         return [filtredCards, notFiltredCardsLength, cards.length];
     }

@@ -49,6 +49,7 @@
     background: linear-gradient(rgba(38, 38, 38, 0.5), rgba(0, 0, 0, 0.95));
 }
 .card__title {
+    font-family: 'Russo One', sans-serif;
     font-weight: 400;
     font-size: 18px;
     line-height: 1.1;
@@ -69,7 +70,7 @@
 
 .card__tooltip {
     all: unset;
-    font-family: 'Pacifico', cursive;
+    font-family: 'Russo One', sans-serif;
     outline: none;
     cursor: default;
     z-index: 3;

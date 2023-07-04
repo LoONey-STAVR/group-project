@@ -10,7 +10,7 @@
 
 .random__btn {
     all: unset;
-    font-family: 'Pacifico', cursive;
+    font-family: 'Russo One', sans-serif;
     filter: drop-shadow(0px 0px 6px rgb(255, 255, 255));
     margin-top: 15px;
     text-transform: uppercase;
@@ -76,19 +76,15 @@
 
 .opacity-enter {
     opacity: 0;
-
 }
 .opacity-enter-active {
     opacity: 1;
-
 }
 .opacity-exit {
     opacity: 1;
-
 }
 .opacity-exit-active {
     opacity: 0;
-
 }
 
 .opacity-enter-active,

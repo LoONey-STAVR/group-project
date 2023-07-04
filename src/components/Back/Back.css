@@ -13,3 +13,40 @@
 .back:hover {
     opacity: 0.8;
 }
+
+.back_categories {
+    all: unset;
+    cursor: pointer;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 50px;
+    height: 50px;
+    padding: 0 10px 0 0;
+    position: fixed;
+    z-index: 12;
+    top: 20px;
+    right: 15%;
+    transition: opacity 0.2s linear;
+}
+@media screen and (max-width: 900px) {
+    .back_categories {
+        width: 30px;
+        height: 30px;
+        top: 15px;
+        right: 100px;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .back_categories {
+        width: 30px;
+        height: 30px;
+        top: 15px;
+        right: 100px;
+    }
+    .back_full-image {
+        width: 50px;
+        height: 50px;
+    }
+}

@@ -13,7 +13,7 @@ function Share({ onShare, name = '' }) {
             style={{
                 backgroundImage: `url(${iconShare})`,
             }}
-            className={`share ${name && 'share_' + name}`}
+            className={`share ${name && 'share_' + name} no-highlight`}
         ></button>
     );
 }

@@ -29,16 +29,37 @@
     }
 }
 
+@keyframes opacity {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.full-image__tooltip {
+    position: absolute;
+    font-family: 'Russo One', sans-serif;
+    text-transform: uppercase;
+    top: 10px;
+    right: 70px;
+    animation: opacity 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
 .full-image__panel {
     display: flex;
     margin: 0 auto 20px;
     justify-content: space-around;
+    align-items: center;
     width: 100%;
 }
 .full-image__title {
     text-align: center;
     margin: 10px auto 0;
     cursor: default;
+    font-family: 'Russo One', sans-serif;
 }
 
 .full-image__avatar {
@@ -68,6 +89,7 @@
     opacity: 0.8;
 }
 .full-image__user {
+    font-family: 'Russo One', sans-serif;
     text-align: center;
     margin: 0 0 10px;
     text-transform: uppercase;

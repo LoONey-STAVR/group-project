@@ -13,21 +13,7 @@
     justify-content: center;
 }
 
-.categories__back-btn {
-    all: unset;
-    cursor: pointer;
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-    width: 50px;
-    height: 50px;
-    padding: 0 10px 0 0;
-    position: absolute;
-    z-index: 12;
-    top: -100px;
-    right: 0;
-    transition: opacity 0.2s linear;
-}
+
 
 @media screen and (max-width: 1150px) {
     .categories__back-btn {

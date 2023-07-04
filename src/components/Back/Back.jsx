@@ -8,7 +8,7 @@ function Back({ onBack, name = '' }) {
             style={{
                 backgroundImage: `url(${iconBack})`,
             }}
-            className={`back ${name && 'back_' + name}`}
+            className={`back ${name && 'back_' + name} no-highlight`}
         ></button>
     );
 }
