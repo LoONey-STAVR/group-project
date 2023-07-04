@@ -20,9 +20,7 @@ export default function useCards() {
 
     function getFiltredCards(cards) {
         const filtredCards = [
-            ...cards.filter(
-                (card) => card.user && card.title !== '' && !cards.every((el) => el.title === card.title)
-            ),
+            ...cards.filter((card) => card.user && card.title !== '' && !cards.some((el) => el.io === card.id)),
         ];
         const notFiltredCardsLength = cards.length - filtredCards.length;
         return [filtredCards, notFiltredCardsLength, cards.length];
