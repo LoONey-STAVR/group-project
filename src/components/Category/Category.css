@@ -9,6 +9,7 @@
     background-color: rgba(8, 16, 129, 0.801);
     margin: 0;
     transition: all 0.5s ease;
+    text-align: center;
 }
 
 .category:hover {

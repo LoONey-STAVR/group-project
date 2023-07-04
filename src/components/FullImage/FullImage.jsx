@@ -5,7 +5,7 @@ import Back from '../Back/Back';
 import HD from '../../images/hd.svg';
 
 function FullImage({ card }) {
-    const [image, setImage] = React.useState({
+    const [image] = React.useState({
         url: card.images.original.url,
         width: card.images.original.width,
         height: card.images.original.height,

@@ -1,8 +1,13 @@
 import './Random.css';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
-function Random({ current, next, onSwipe, loadingGifState }) {
+import { useState, useRef, useEffect } from 'react';
+import Slide from '../components/Slide/Slide';
+function Random({ current, next, onSwipe, loadedRandomGif }) {
+    const [isDisabled, setIsDisabled] = useState(true);
+
     function handleSwipe() {
-        onSwipe((prev) => !prev);
+        onSwipe((prev) => (prev === 'current' ? 'next' : 'current'));
+        setIsDisabled(!isDisabled);
     }
 
     return (
@@ -10,59 +15,26 @@ function Random({ current, next, onSwipe, loadingGifState }) {
             <SwitchTransition mode={'out-in'}>
                 <CSSTransition
                     timeout={1000}
-                    key={loadingGifState ? current.id : next.id}
+                    key={loadedRandomGif === 'current' ? current.id : next.id}
                     classNames='fade'
                 >
-                    {loadingGifState ? (
-                        <div className='random__slide'>
-                            {current.user && (
-                                <div className='random__user-info'>
-                                    <img
-                                        src={current.user.avatar_url}
-                                        alt='Аватар'
-                                        className='random__avatar'
-                                    />
-                                    <h3 className='random__username'>{current.username}</h3>
-                                    <img
-                                        src={current.images.original.url}
-                                        alt='Изображение'
-                                        className='random__image'
-                                    />
-                                </div>
-                            )}
-                        </div>
-                    ) : (
-                        <div className='random__slide'>
-                            {next.user && (
-                                <div className='random__user-info'>
-                                    <img
-                                        src={next.user.avatar_url}
-                                        alt='Аватар'
-                                        className='random__avatar'
-                                    />
-                                    <h3 className='random__username'>{next.username}</h3>
-                                    <img
-                                        src={
-                                            next.images.original
-                                                ? next.images.original.url
-                                                : next.images.downsized.url
-                                        }
-                                        alt='Изображение'
-                                        className='random__image'
-                                    />
-                                </div>
-                            )}
-                        </div>
-                    )}
+                    {loadedRandomGif === 'current' ? <Slide card={current} /> : <Slide card={next} />}
                 </CSSTransition>
             </SwitchTransition>
-
-            <button
-                onClick={handleSwipe}
-                className='random__btn'
-            >
-                Следующая
-            </button>
+            <SwitchTransition mode={'out-in'}>
+                <CSSTransition
+                    timeout={1000}
+                    key={isDisabled}
+                    classNames='opacity'
+                >
+                    <button
+                        onClick={handleSwipe}
+                        className={`random__btn fade}`}
+                    >
+                        Следующая
+                    </button>
+                </CSSTransition>
+            </SwitchTransition>
         </section>
     );
 }

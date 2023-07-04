@@ -1,103 +1,97 @@
 .random {
     position: relative;
-    padding: 0 10px;
-    width: 50%;
+    width: 100%;
     margin: 0 auto;
-}
-.random__slide {
-    position: relative;
-}
-.random__image {
-    width: 100%;
-    height: 400px;
-    object-fit: cover;
-    border-radius: 20px;
-}
-.random__user-info {
     display: flex;
-    align-items: center;
     flex-direction: column;
-    justify-content: space-between;
-    width: 100%;
-    z-index: 2;
-    padding: 0 0 10px 10px;
-    box-sizing: border-box;
-    text-transform: capitalize;
-}
-
-.random__avatar {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-.random__username {
-    margin: 5px 0 20px;
-    font-size: 25px;
+    justify-content: center;
+    align-items: center;
 }
 
 .random__btn {
     all: unset;
     font-family: 'Pacifico', cursive;
     filter: drop-shadow(0px 0px 6px rgb(255, 255, 255));
-    height: 50px;
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    position: absolute;
-    bottom: -50px;
-    right: 180px;
+    margin-top: 15px;
     text-transform: uppercase;
-    z-index: 500;
     border: none;
     cursor: pointer;
-    padding: 0;
+    padding: 5px 10px;
     border-radius: 50%;
+    opacity: 1;
 }
 
-.random__btn:hover {
-    opacity: 0.9;
+.random__btn_disabled {
+    animation: fade 1s forwards;
 }
 
-@media (max-width: 767px) {
-    .random__image {
-        height: 300px;
+@media screen and (max-width: 500px) {
+    .random__btn {
+        font-size: 14px;
     }
-    .random__user-info {
-        gap: 20px;
+}
+
+@keyframes fade {
+    0% {
+        pointer-events: none;
+        cursor: default;
     }
-    .random__user-info::after {
-        height: 70px;
-    }
-    .random__avatar {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        object-fit: cover;
-    }
-    .random__username {
-        font-size: 18px;
+    25% {
+        opacity: 1;
     }
 
+    50% {
+        opacity: 0;
+    }
+    75% {
+        opacity: 0;
+    }
+    100% {
+        pointer-events: all;
+        opacity: 1;
+        cursor: pointer;
+    }
 }
 
 .fade-enter {
     opacity: 0;
-    transform: translateX(-100%);
+    transform: translateY(-100%);
 }
 .fade-enter-active {
     opacity: 1;
-    transform: translateX(0%);
+    transform: translateY(0%);
 }
 .fade-exit {
     opacity: 1;
-    transform: translateX(0%);
+    transform: translateY(0%);
 }
 .fade-exit-active {
     opacity: 0;
-    transform: translateX(100%);
+    transform: translateY(-100%);
 }
 .fade-enter-active,
 .fade-exit-active {
-    transition: opacity 1000ms, transform 1000ms;
+    transition: opacity 600ms, transform 600ms;
+}
+
+.opacity-enter {
+    opacity: 0;
+
+}
+.opacity-enter-active {
+    opacity: 1;
+
+}
+.opacity-exit {
+    opacity: 1;
+
+}
+.opacity-exit-active {
+    opacity: 0;
+
+}
+
+.opacity-enter-active,
+.opacity-exit-active {
+    transition: opacity 600ms;
 }

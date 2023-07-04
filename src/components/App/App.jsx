@@ -34,9 +34,15 @@ function App() {
         setCategories,
     } = useCards();
 
-    const [currentGifSlide, setCurrentGifSlide] = useState({});
-    const [nextGifSlide, setNextGifSlide] = useState({});
-    const [loadingGifState, setLoadingGitState] = useState(false);
+    const [currentGifSlide, setCurrentGifSlide] = useState({
+        images: { original: { width: 0, height: 0, url: '' } },
+        user: { username: '', avatar_url: '' },
+    });
+    const [nextGifSlide, setNextGifSlide] = useState({
+        images: { original: { width: 0, height: 0, url: '' } },
+        user: { username: '', avatar_url: '' },
+    });
+    const [loadedRandomGif, setLoadedRandomGif] = useState('');
     const { fetching, setFetching } = useScrollListener(cards, totalCount);
     const navigate = useNavigate();
     const location = useLocation();
@@ -106,8 +112,12 @@ function App() {
     }, [handleFetch, getRandomGif]);
 
     useEffect(() => {
-        loadingGifState ? getNextSlide() : getCurrentSlide();
-    }, [loadingGifState, getCurrentSlide, getNextSlide]);
+        if (loadedRandomGif || loadedRandomGif === 'next') {
+            getCurrentSlide();
+        } else {
+            getNextSlide();
+        }
+    }, [loadedRandomGif, getCurrentSlide, getNextSlide]);
 
     useEffect(() => {
         if (location.pathname === '/' && cards.length === 0) {
@@ -153,15 +163,6 @@ function App() {
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-    useEffect(() => {
-        function getResponce() {
-            return Promise.all([getRandomGif(), getRandomGif()]).then(([current, next]) => {
-                setCurrentGifSlide(current);
-                setNextGifSlide(next);
-            });
-        }
-        handleFetch(getResponce);
-    }, [handleFetch]);
 
     return (
         <>
@@ -193,8 +194,8 @@ function App() {
                         <Random
                             current={currentGifSlide}
                             next={nextGifSlide}
-                            onSwipe={setLoadingGitState}
-                            loadingGifState={loadingGifState}
+                            loadedRandomGif={loadedRandomGif}
+                            onSwipe={setLoadedRandomGif}
                         />
                     }
                 />

@@ -44,9 +44,23 @@
 }
 
 @media screen and (max-width: 900px) {
+    .categories {
+        width: 80%;
+    }
     .categories__back-btn {
-        top: -60px;
-        right: 50px;
+        top: -55px;
+        right: -34px;
+    }
+
+    .categories__list {
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .categories__back-btn {
+        top: -55px;
+        right: -8px;
     }
 }
 
