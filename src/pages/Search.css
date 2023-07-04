@@ -74,7 +74,6 @@
     font-weight: 600;
     color: #fff;
     padding: 0 10px;
-
 }
 
 @media (max-width: 767px) {
@@ -85,7 +84,7 @@
 @media (max-width: 520px) {
     .search__shadow {
         width: 280px;
-        margin: 0 0 30px;
+        margin: 0 auto 30px;
     }
     .search__input {
         width: calc(100% - 10px);
