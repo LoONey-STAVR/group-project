@@ -1,20 +1,19 @@
 {
   "files": {
-    "main.css": "/group-project/static/css/main.389d3ad1.css",
-    "main.js": "/group-project/static/js/main.c8fd58d2.js",
+    "main.css": "/group-project/static/css/main.fa07ff45.css",
+    "main.js": "/group-project/static/js/main.8f844d7f.js",
     "static/media/glitch-image-1688358019.png": "/group-project/static/media/glitch-image-1688358019.bdf2e3bfe73189f8674e.png",
     "static/media/glitch-image-1688358015.png": "/group-project/static/media/glitch-image-1688358015.60cf82f1444fbdb6fc18.png",
     "static/media/glitch-image-1688358024.png": "/group-project/static/media/glitch-image-1688358024.eed5b63d447c5c386e8d.png",
     "static/media/logo.png": "/group-project/static/media/logo.c3d366e271b39180a936.png",
-    "static/media/hd.svg": "/group-project/static/media/hd.f49a569bd49b17fde591acd44df3b6fa.svg",
     "static/media/share.svg": "/group-project/static/media/share.f077ffaade670da67b88ab90a607261f.svg",
     "static/media/bkac.svg": "/group-project/static/media/bkac.6635e0babb4519fff37d03a9edb83f25.svg",
     "index.html": "/group-project/index.html",
-    "main.389d3ad1.css.map": "/group-project/static/css/main.389d3ad1.css.map",
-    "main.c8fd58d2.js.map": "/group-project/static/js/main.c8fd58d2.js.map"
+    "main.fa07ff45.css.map": "/group-project/static/css/main.fa07ff45.css.map",
+    "main.8f844d7f.js.map": "/group-project/static/js/main.8f844d7f.js.map"
   },
   "entrypoints": [
-    "static/css/main.389d3ad1.css",
-    "static/js/main.c8fd58d2.js"
+    "static/css/main.fa07ff45.css",
+    "static/js/main.8f844d7f.js"
   ]
 }
