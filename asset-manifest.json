@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/group-project/static/css/main.53769493.css",
+    "main.css": "/group-project/static/css/main.df4e0654.css",
     "main.js": "/group-project/static/js/main.327756f7.js",
     "static/media/glitch-image-1688358019.png": "/group-project/static/media/glitch-image-1688358019.bdf2e3bfe73189f8674e.png",
     "static/media/glitch-image-1688358015.png": "/group-project/static/media/glitch-image-1688358015.60cf82f1444fbdb6fc18.png",
@@ -10,11 +10,11 @@
     "static/media/share.svg": "/group-project/static/media/share.f077ffaade670da67b88ab90a607261f.svg",
     "static/media/bkac.svg": "/group-project/static/media/bkac.6635e0babb4519fff37d03a9edb83f25.svg",
     "index.html": "/group-project/index.html",
-    "main.53769493.css.map": "/group-project/static/css/main.53769493.css.map",
+    "main.df4e0654.css.map": "/group-project/static/css/main.df4e0654.css.map",
     "main.327756f7.js.map": "/group-project/static/js/main.327756f7.js.map"
   },
   "entrypoints": [
-    "static/css/main.53769493.css",
+    "static/css/main.df4e0654.css",
     "static/js/main.327756f7.js"
   ]
 }
