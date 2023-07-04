@@ -6,6 +6,8 @@
 .slide__image {
     object-fit: cover;
     border-radius: 20px;
+    max-width: 500px;
+    max-height: 500px;
 }
 .slide__user-info {
     display: flex;

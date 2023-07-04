@@ -112,7 +112,6 @@ function App() {
     }, [handleFetch, getRandomGif]);
 
     useEffect(() => {
-        console.log(loadedRandomGif === '');
         if (loadedRandomGif === '' || loadedRandomGif === 'next') {
             getCurrentSlide();
         } else {

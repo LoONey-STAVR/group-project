@@ -2,8 +2,7 @@ import React from 'react';
 import './FullImage.css';
 import Share from '../Share/Share';
 import Back from '../Back/Back';
-import HD from '../../images/hd.svg';
-
+import ToolTip from '../App/ToolTip/ToolTip';
 function FullImage({ card }) {
     const [isCopy, setIsCopy] = React.useState(false);
     const [image] = React.useState({
@@ -19,7 +18,7 @@ function FullImage({ card }) {
         setIsCopy(true);
         setTimeout(() => {
             setIsCopy((prev) => !prev);
-        }, 1500);
+        }, 1000);
         navigator.clipboard.writeText(card.images.original.url);
     }
 
@@ -36,12 +35,15 @@ function FullImage({ card }) {
                         backgroundImage: `url(${card.user.avatar_url})`,
                     }}
                     className='full-image__avatar'
-                >
-                    {isCopy && <div className='full-image__tooltip'>Ссылка скопирована</div>}
-                </div>
+                ></div>
                 <Share
                     onShare={handleShare}
                     name='full-image'
+                    isActive={isCopy}
+                />
+                <ToolTip
+                    isActive={isCopy}
+                    name={'full-image'}
                 />
             </div>
 
@@ -51,7 +53,7 @@ function FullImage({ card }) {
                     width: `${image.width}px`,
                     height: `${image.height}px`,
                 }}
-                className='full-image__image'
+                className='full-image__image animation-fade'
             ></div>
             <h2 className='full-image__title'>{card.title}</h2>
         </section>

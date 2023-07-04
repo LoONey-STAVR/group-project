@@ -6,6 +6,8 @@ import App from './components/App/App';
 import './index.css';
 import './css/animation-ascent.css';
 import './css/no-highlight.css';
+import './css/animation-opacity.css';
+import './css/animation-fade.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

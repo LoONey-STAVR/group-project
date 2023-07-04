@@ -1,0 +1,14 @@
+.animation-fade {
+    animation: fade 0.4s cubic-bezier(0.47, 0, 0.745, 0.715);
+}
+
+@keyframes fade {
+    0% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    100% {
+        opacity: 1;
+    }
+}

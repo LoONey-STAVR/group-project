@@ -11,9 +11,9 @@ export default function useScrollListener(cards, totalCount) {
                 e.target.documentElement.scrollHeight -
                     (e.target.documentElement.scrollTop + window.innerHeight) ===
                     0 &&
-                e.target.documentElement.scrollHeight > 1500 &&
+                e.target.documentElement.scrollHeight > 1000 &&
                 totalCount !== cards.length;
-            console.log(isReadyToFetch)
+            console.log(isReadyToFetch);
             if (isReadyToFetch) {
                 setFetching(true);
             } else {

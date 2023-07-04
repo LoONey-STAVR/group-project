@@ -15,39 +15,14 @@
     margin: 0 auto;
     border-radius: 20px;
     margin-top: 10px;
-    animation: fade 0.3s cubic-bezier(0.47, 0, 0.745, 0.715);
 }
 
-@keyframes fade {
-    0% {
-        opacity: 0;
-        transform: scale(0.9);
-    }
-
-    100% {
-        opacity: 1;
+@media screen and (max-width: 700px) {
+    .full-image__tooltip {
+        top: 32px;
+        font-size: 14px;
     }
 }
-
-@keyframes opacity {
-    0% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
-}
-
-.full-image__tooltip {
-    position: absolute;
-    font-family: 'Russo One', sans-serif;
-    text-transform: uppercase;
-    top: 10px;
-    right: 70px;
-    animation: opacity 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
-}
-
 .full-image__panel {
     display: flex;
     margin: 0 auto 20px;
@@ -71,23 +46,7 @@
     background-size: cover;
     background-repeat: no-repeat;
 }
-.full-image__hd {
-    all: unset;
-    position: absolute;
-    top: 0;
-    right: -100px;
-    background-size: cover;
-    background-position: center;
-    filter: drop-shadow(0 0 10px white);
-    width: 50px;
-    height: 50px;
-    cursor: pointer;
-    transition: opacity 0.3s ease;
-}
 
-.full-image__hd:hover {
-    opacity: 0.8;
-}
 .full-image__user {
     font-family: 'Russo One', sans-serif;
     text-align: center;

@@ -1,11 +1,11 @@
 import React from 'react';
 import './Share.css';
 import iconShare from '../../images/share.svg';
-
-function Share({ onShare, name = '' }) {
+import ToolTip from '../App/ToolTip/ToolTip';
+function Share({ onShare, name = '', isActive }) {
     function handleShare(e) {
         e.preventDefault();
-        onShare();
+        onShare(e);
     }
     return (
         <button
@@ -13,7 +13,7 @@ function Share({ onShare, name = '' }) {
             style={{
                 backgroundImage: `url(${iconShare})`,
             }}
-            className={`share ${name && 'share_' + name} no-highlight`}
+            className={`share ${name && 'share_' + name} no-highlight ${isActive && 'share_disabled'}`}
         ></button>
     );
 }
