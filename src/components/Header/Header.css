@@ -79,7 +79,7 @@
     transition: all 0.7s ease;
     border-radius: 5px;
 }
-@media (max-width:767px) {
+@media (max-width:900px) {
     .header {
         transition: all 0.7s ease-out;
         display: block;

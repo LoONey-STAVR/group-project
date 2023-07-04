@@ -17,10 +17,10 @@ function Slider({ cards }) {
     }
     const breackPoints = {
         320: {
-            slidesPerView: 1,
+            slidesPerView: 2,
         },
         480: {
-            slidesPerView: 2,
+            slidesPerView: 3,
         },
         992: {
             slidesPerView: 3

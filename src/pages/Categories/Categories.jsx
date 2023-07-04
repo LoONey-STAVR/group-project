@@ -21,6 +21,7 @@ function Categories({ categories, cards, onCard, onSubcategory, onBack }) {
         setIsActive(false);
         setCurrentCategory([]);
         onBack();
+        window.scrollTo(0, 0);
     }
 
     useEffect(() => {

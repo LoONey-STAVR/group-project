@@ -23,10 +23,31 @@
     height: 50px;
     padding: 0 10px 0 0;
     position: absolute;
-    z-index: 5;
-    top: -60px;
-    right: 10px;
+    z-index: 12;
+    top: -100px;
+    right: 0;
     transition: opacity 0.2s linear;
+}
+
+@media screen and (max-width: 1150px) {
+    .categories__back-btn {
+        width: 30px;
+        height: 30px;
+        top: -90px;
+    }
+}
+@media screen and (max-width: 1000px) {
+    .categories__back-btn {
+        top: -90px;
+        right: 30px;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .categories__back-btn {
+        top: -60px;
+        right: 50px;
+    }
 }
 
 .categories__back-btn:hover {

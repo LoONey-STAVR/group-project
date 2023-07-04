@@ -34,8 +34,8 @@ function App() {
         setCategories,
     } = useCards();
 
-    const [currentGifSlide, setCurrentGifSlide] = useState({})
-    const [nextGifSlide, setNextGifSlide] = useState({})
+    const [currentGifSlide, setCurrentGifSlide] = useState({});
+    const [nextGifSlide, setNextGifSlide] = useState({});
     const [loadingGifState, setLoadingGitState] = useState(false);
     const { fetching, setFetching } = useScrollListener(cards, totalCount);
     const navigate = useNavigate();
@@ -82,20 +82,32 @@ function App() {
         handleFetch(getResponce);
     }, [currentQuery, debouncedValue, handleFetch, setNextCards]);
 
-    function swipeGif() {
+    const getRandomGif = useCallback(() => {
+        return api.getRandomGif().then((res) => {
+            if (!res.data.user) {
+                return getRandomGif();
+            } else {
+                return res.data;
+            }
+        });
+    }, []);
+    const getNextSlide = useCallback(() => {
+        function getResponce() {
+            return getRandomGif().then(setNextGifSlide);
+        }
+        handleFetch(getResponce);
+    }, [handleFetch, getRandomGif]);
+
+    const getCurrentSlide = useCallback(() => {
+        function getResponce() {
+            return getRandomGif().then(setCurrentGifSlide);
+        }
+        handleFetch(getResponce);
+    }, [handleFetch, getRandomGif]);
+
+    useEffect(() => {
         loadingGifState ? getNextSlide() : getCurrentSlide();
-        setLoadingGitState(prev => !prev)
-    }
-    function getNextSlide() {
-        api.getRandomGif()
-            .then(res => setNextGifSlide(res.data))
-            .catch(err => console.log(err))
-    }
-    function getCurrentSlide() {
-        api.getRandomGif()
-            .then(res => setCurrentGifSlide(res.data))
-            .catch(err => console.log(err))
-    }
+    }, [loadingGifState, getCurrentSlide, getNextSlide]);
 
     useEffect(() => {
         if (location.pathname === '/' && cards.length === 0) {
@@ -121,7 +133,6 @@ function App() {
                 getNextSearchCards();
             }
             if (location.pathname === '/categories') {
-                console.log('f');
                 getNextSubcategoriesCards();
             }
         }
@@ -143,19 +154,18 @@ function App() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     useEffect(() => {
-        Promise.all([api.getRandomGif(), api.getRandomGif()])
-            .then(([current, next]) => {
-                setCurrentGifSlide(current.data)
-                setNextGifSlide(next.data)
-            })
-            .catch(err => console.log(err))
-    }, [])
+        function getResponce() {
+            return Promise.all([getRandomGif(), getRandomGif()]).then(([current, next]) => {
+                setCurrentGifSlide(current);
+                setNextGifSlide(next);
+            });
+        }
+        handleFetch(getResponce);
+    }, [handleFetch]);
 
     return (
         <>
-            <Header
-                onLink={resetCards}
-            />
+            <Header onLink={resetCards} />
             <Routes>
                 <Route
                     path='/search'
@@ -183,7 +193,7 @@ function App() {
                         <Random
                             current={currentGifSlide}
                             next={nextGifSlide}
-                            handleClickBtn={swipeGif}
+                            onSwipe={setLoadingGitState}
                             loadingGifState={loadingGifState}
                         />
                     }

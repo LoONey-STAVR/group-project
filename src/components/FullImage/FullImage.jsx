@@ -2,8 +2,15 @@ import React from 'react';
 import './FullImage.css';
 import Share from '../Share/Share';
 import Back from '../Back/Back';
+import HD from '../../images/hd.svg';
 
 function FullImage({ card }) {
+    const [image, setImage] = React.useState({
+        url: card.images.original.url,
+        width: card.images.original.width,
+        height: card.images.original.height,
+    });
+
 
     function handleBack() {
         window.history.go(-1);
@@ -33,14 +40,14 @@ function FullImage({ card }) {
             </div>
 
             <div
-                
                 style={{
-                    backgroundImage: `url(${card.images.original.webp})`,
-                    width: `${card.images.original.width}px`,
-                    height: `${card.images.original.height}px`,
+                    backgroundImage: `url(${image.url})`,
+                    width: `${image.width}px`,
+                    height: `${image.height}px`,
                 }}
                 className='full-image__image'
-            ></div>
+            >
+            </div>
             <h2 className='full-image__title'>{card.title}</h2>
         </section>
     );
