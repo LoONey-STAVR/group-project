@@ -18,10 +18,12 @@ export default function useCards() {
         setSubcategory('');
     }, []);
 
-    function getFiltredCards(cards) {
-        const filtredCards = [...cards.filter((card) => card.user && card.title !== '')];
-        const notFiltredCardsLength = cards.length - filtredCards.length;
-        return [filtredCards, notFiltredCardsLength, cards.length];
+    function getFiltredCards(newCards) {
+        const filtredCards = [
+            ...newCards.filter((card) => card.user && card.title !== '' && cards.every((el) => el.id !== card.id)),
+        ];
+        const notFiltredCardsLength = newCards.length - filtredCards.length;
+        return [filtredCards, notFiltredCardsLength, newCards.length];
     }
 
     function setNewCards(res) {
