@@ -12,8 +12,8 @@ import { useLocation } from 'react-router-dom';
 import FullImage from '../FullImage/FullImage';
 import Categories from '../../pages/Categories/Categories';
 import React from 'react';
-import useScrollListener from '../hooks/useScrollListener';
-import useCards from '../hooks/useCards';
+import useScrollListener from '../../hooks/useScrollListener';
+import useCards from '../../hooks/useCards';
 
 function App() {
     const {

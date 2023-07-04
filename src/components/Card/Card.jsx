@@ -2,7 +2,7 @@ import './Card.css';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Share from '../Share/Share';
-import ToolTip from '../App/ToolTip/ToolTip';
+import ToolTip from '../ToolTip/ToolTip';
 import '../../css/animation-ascent.css';
 
 function Card({ card, onCard = null }) {

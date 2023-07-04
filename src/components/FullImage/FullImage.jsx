@@ -2,7 +2,7 @@ import React from 'react';
 import './FullImage.css';
 import Share from '../Share/Share';
 import Back from '../Back/Back';
-import ToolTip from '../App/ToolTip/ToolTip';
+import ToolTip from '../ToolTip/ToolTip';
 function FullImage({ card }) {
     const [isCopy, setIsCopy] = React.useState(false);
     const [image] = React.useState({

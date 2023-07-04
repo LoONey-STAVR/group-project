@@ -1,7 +1,6 @@
 import React from 'react';
 import './Share.css';
 import iconShare from '../../images/share.svg';
-import ToolTip from '../App/ToolTip/ToolTip';
 function Share({ onShare, name = '', isActive }) {
     function handleShare(e) {
         e.preventDefault();

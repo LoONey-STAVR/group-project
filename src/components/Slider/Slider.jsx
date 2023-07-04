@@ -45,10 +45,9 @@ function Slider({ cards }) {
                 {cards.map((card, index) => (
                     <SwiperSlide
                         id='slide'
-                        key={card.id}
+                        key={index}
                     >
                         <img
-                            key={index}
                             className='swiper__img'
                             src={card.images.downsized.url}
                             alt='Слайд'
