@@ -1,19 +1,22 @@
 import './Header.css';
-import logo from '../../images/logo.png';
 import Navigate from '../Navigate/Navigate';
-function Header({ onRandom, onTrend, onLink }) {
+import { useState } from 'react';
+function Header({ onLink }) {
+    const [menuActive, setMenuActive] = useState(false);
+    function addActiveClass(className) {
+        return menuActive ? `${className} active` : className;
+    }
     return (
-        <div className='header'>
-            {/* <img
-                src={logo}
-                alt='Логотип'
-                className='header__logo'
-            /> */}
+        <div className={addActiveClass("header")}>
+            <div className='glitch'></div>
             <Navigate
                 onLink={onLink}
-                onTrend={onTrend}
-                onRandom={onRandom}
+                setMenuActive={setMenuActive}
+                addActiveClass={addActiveClass}
             />
+            <div onClick={() => setMenuActive(prev => !prev)} className={addActiveClass("header__menu")}>
+                <span className={addActiveClass("header__burger")}></span>
+            </div>
         </div>
     );
 }

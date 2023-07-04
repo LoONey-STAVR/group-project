@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import shareIcon from '../../images/share.svg';
 import '../../css/animation-ascent.css';
 
-//
 function Card({ card, onCard = null }) {
     const [isCopy, setIsCopy] = useState(false);
     function handleShare(e) {
@@ -25,7 +24,7 @@ function Card({ card, onCard = null }) {
         <Link
             to={`/${card.id}`}
             onClick={onCard && handleCard}
-            className='card animation-ascent'
+            className='card card-big animation-ascent'
             style={{ backgroundImage: `url(${card.images.downsized.url})` }}
         >
             <button

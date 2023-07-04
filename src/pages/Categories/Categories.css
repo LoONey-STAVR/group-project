@@ -16,14 +16,16 @@
 .categories__back-btn {
     all: unset;
     cursor: pointer;
-    background-size: cover;
+    background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
     width: 50px;
     height: 50px;
+    padding: 0 10px 0 0;
     position: absolute;
-    top: -80px;
-    right: 50px;
+    z-index: 5;
+    top: -60px;
+    right: 10px;
     transition: opacity 0.2s linear;
 }
 

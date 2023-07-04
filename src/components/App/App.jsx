@@ -34,7 +34,9 @@ function App() {
         setCategories,
     } = useCards();
 
-    const [randomGif, setRandomGif] = useState({});
+    const [currentGifSlide, setCurrentGifSlide] = useState({})
+    const [nextGifSlide, setNextGifSlide] = useState({})
+    const [loadingGifState, setLoadingGitState] = useState(false);
     const { fetching, setFetching } = useScrollListener(cards, totalCount);
     const navigate = useNavigate();
     const location = useLocation();
@@ -80,11 +82,19 @@ function App() {
         handleFetch(getResponce);
     }, [currentQuery, debouncedValue, handleFetch, setNextCards]);
 
-    function handleRandomGifClick() {
-        function getResponce() {
-            return api.getRandomGif().then((res) => setRandomGif(res.data));
-        }
-        handleFetch(getResponce);
+    function swipeGif() {
+        loadingGifState ? getNextSlide() : getCurrentSlide();
+        setLoadingGitState(prev => !prev)
+    }
+    function getNextSlide() {
+        api.getRandomGif()
+            .then(res => setNextGifSlide(res.data))
+            .catch(err => console.log(err))
+    }
+    function getCurrentSlide() {
+        api.getRandomGif()
+            .then(res => setCurrentGifSlide(res.data))
+            .catch(err => console.log(err))
     }
 
     useEffect(() => {
@@ -132,12 +142,19 @@ function App() {
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+    useEffect(() => {
+        Promise.all([api.getRandomGif(), api.getRandomGif()])
+            .then(([current, next]) => {
+                setCurrentGifSlide(current.data)
+                setNextGifSlide(next.data)
+            })
+            .catch(err => console.log(err))
+    }, [])
 
     return (
         <>
             <Header
                 onLink={resetCards}
-                onRandom={handleRandomGifClick}
             />
             <Routes>
                 <Route
@@ -150,7 +167,7 @@ function App() {
                             onCard={setPrevieCard}
                         />
                     }
-                ></Route>
+                />
                 <Route
                     path='/'
                     element={
@@ -159,13 +176,15 @@ function App() {
                             cards={cards}
                         />
                     }
-                ></Route>
+                />
                 <Route
                     path='/random'
                     element={
                         <Random
-                            card={randomGif}
-                            handleClickBtn={handleRandomGifClick}
+                            current={currentGifSlide}
+                            next={nextGifSlide}
+                            handleClickBtn={swipeGif}
+                            loadingGifState={loadingGifState}
                         />
                     }
                 />
@@ -187,7 +206,7 @@ function App() {
                             onBack={resetCards}
                         />
                     }
-                ></Route>
+                />
             </Routes>
         </>
     );

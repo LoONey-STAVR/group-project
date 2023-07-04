@@ -1,0 +1,31 @@
+.swiper_container {
+    height: 200px;
+    max-width: 100%;
+    padding: 0;
+  }
+  #slide {
+    flex-shrink: 0;
+  }
+ .swiper__img {
+  width: 300px;
+ }
+  .swiper-slide img {
+   
+    height: 200px;
+    border-radius: 20px;
+    object-fit: cover;
+  }
+  .swiper-slide-shadow-left,
+.swiper-slide-shadow-right {
+  display: none;
+}
+@media (max-width:992px) {
+  .swiper__img {
+    width: 100%;
+   }
+}
+@media (max-width:767px) {
+  #slide {
+    flex-shrink: 0;
+  }
+}
