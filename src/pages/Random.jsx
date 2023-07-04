@@ -18,12 +18,12 @@ function Random({ current, next, onSwipe, loadedRandomGif }) {
                     key={loadedRandomGif === 'current' ? current.id : next.id}
                     classNames='fade'
                 >
-                    {loadedRandomGif === 'current' ? <Slide card={current} /> : <Slide card={next} />}
+                    {loadedRandomGif === 'current' ? <Slide card={next} /> : <Slide card={current} />}
                 </CSSTransition>
             </SwitchTransition>
             <SwitchTransition mode={'out-in'}>
                 <CSSTransition
-                    timeout={1000}
+                    timeout={1100}
                     key={isDisabled}
                     classNames='opacity'
                 >
