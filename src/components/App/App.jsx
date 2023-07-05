@@ -89,6 +89,7 @@ function App() {
     }, [currentQuery, debouncedValue, handleFetch, setNextCards]);
 
     const getRandomGif = useCallback(() => {
+    
         return api.getRandomGif().then((res) => {
             if (!res.data.user) {
                 return getRandomGif();
@@ -112,6 +113,7 @@ function App() {
     }, [handleFetch, getRandomGif]);
 
     useEffect(() => {
+       
         if (loadedRandomGif === '' || loadedRandomGif === 'next') {
             getCurrentSlide();
         } else {

@@ -10,10 +10,15 @@
     background-size: cover;
     background-repeat: no-repeat;
     border-radius: 20px;
+    transition: all 0.4s linear;
 }
 
 .card:hover {
     box-shadow: 0px 0px 20px rgb(197, 193, 199);
+}
+.card_out {
+    opacity: 0;
+    visibility: hidden;
 }
 
 .card__title-zone {

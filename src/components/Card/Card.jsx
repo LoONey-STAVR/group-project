@@ -1,12 +1,33 @@
 import './Card.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Share from '../Share/Share';
 import ToolTip from '../ToolTip/ToolTip';
 import '../../css/animation-ascent.css';
+import { useRef } from 'react';
 
 function Card({ card, onCard = null }) {
     const [isCopy, setIsCopy] = useState(false);
+    const refCard = useRef();
+    let position;
+    const [isOut, setIsOut] = useState('');
+    useEffect(() => {
+        function fc() {
+            position = refCard.current.getBoundingClientRect();
+            if (position.top < 0) {
+                setIsOut(true);
+            } else {
+                setIsOut(false);
+            }
+            console.log(position);
+        }
+        window.addEventListener('scroll', fc);
+
+        return () => {
+            window.removeEventListener('scroll', fc);
+        };
+    }, []);
+
     function handleShare(e) {
         e.stopPropagation();
         e.preventDefault();
@@ -23,9 +44,10 @@ function Card({ card, onCard = null }) {
 
     return (
         <Link
+            ref={refCard}
             to={`/${card.id}`}
             onClick={onCard && handleCard}
-            className='card card-big animation-ascent'
+            className={`card card-big ${isOut && 'card_out'} animation-ascent`}
             style={{ backgroundImage: `url(${card.images.downsized.url})` }}
         >
             <Share
