@@ -9,17 +9,14 @@ import { useRef } from 'react';
 function Card({ card, onCard = null }) {
     const [isCopy, setIsCopy] = useState(false);
     const refCard = useRef();
-    let position;
     const [isOut, setIsOut] = useState('');
     useEffect(() => {
         function fc() {
-            position = refCard.current.getBoundingClientRect();
-            if (position.top < 0) {
+            if (refCard.current.getBoundingClientRect().top < 0) {
                 setIsOut(true);
             } else {
                 setIsOut(false);
             }
-            console.log(position);
         }
         window.addEventListener('scroll', fc);
 
