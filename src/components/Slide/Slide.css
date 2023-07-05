@@ -2,12 +2,27 @@
     position: relative;
     display: flex;
 }
-
+.load {
+    position: fixed;
+    top:0;
+    left:0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .slide__image {
     object-fit: cover;
     border-radius: 20px;
     max-width: 500px;
     max-height: 500px;
+    transition: all 0.5s linear;
+}
+
+.slide__image_invisible {
+    visibility: hidden;
+    opacity: 0;
 }
 .slide__user-info {
     display: flex;

@@ -9,14 +9,11 @@ import { useRef } from 'react';
 function Card({ card, onCard = null }) {
     const [isCopy, setIsCopy] = useState(false);
     const refCard = useRef();
-    const [isOut, setIsOut] = useState('');
+
+    const [position, setPosition] = useState(0);
     useEffect(() => {
         function fc() {
-            if (refCard.current.getBoundingClientRect().top < 0) {
-                setIsOut(true);
-            } else {
-                setIsOut(false);
-            }
+            setPosition(refCard.current.getBoundingClientRect().top);
         }
         window.addEventListener('scroll', fc);
 
@@ -44,8 +41,8 @@ function Card({ card, onCard = null }) {
             ref={refCard}
             to={`/${card.id}`}
             onClick={onCard && handleCard}
-            className={`card card-big ${isOut && 'card_out'} animation-ascent`}
-            style={{ backgroundImage: `url(${card.images.downsized.url})` }}
+            className={`card card-big ${position < -10 && 'card_out'} animation-ascent`}
+            style={{ backgroundImage: `url(${position < -500 ? '' : card.images.downsized.url})` }}
         >
             <Share
                 onShare={handleShare}

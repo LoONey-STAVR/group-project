@@ -1,13 +1,18 @@
 import './Random.css';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
-import { useState} from 'react';
+import { useState } from 'react';
+import Loader from '../components/Loader/Loader';
+
 import Slide from '../components/Slide/Slide';
 function Random({ current, next, onSwipe, loadedRandomGif }) {
-    const [isDisabled, setIsDisabled] = useState(false);
-
+    const [isloaded, setIsLoaded] = useState(false);
     function handleSwipe() {
         onSwipe((prev) => (prev === 'current' ? 'next' : 'current'));
-        setIsDisabled(!isDisabled);
+        setIsLoaded(false);
+    }
+
+    function handleLoad() {
+        setIsLoaded(true);
     }
 
     return (
@@ -15,16 +20,26 @@ function Random({ current, next, onSwipe, loadedRandomGif }) {
             <SwitchTransition mode={'out-in'}>
                 <CSSTransition
                     timeout={1000}
-                    key={loadedRandomGif === 'current' ? next.id : current.id}
+                    key={loadedRandomGif}
                     classNames='fade'
                 >
-                    {loadedRandomGif === 'current' ? <Slide card={next} /> : <Slide card={current} />}
+                    {loadedRandomGif === 'current' ? (
+                        <Slide
+                            onLoad={handleLoad}
+                            card={next}
+                        />
+                    ) : (
+                        <Slide
+                            onLoad={handleLoad}
+                            card={current}
+                        />
+                    )}
                 </CSSTransition>
             </SwitchTransition>
             <SwitchTransition mode={'out-in'}>
                 <CSSTransition
                     timeout={1100}
-                    key={isDisabled}
+                    key={loadedRandomGif}
                     classNames='opacity'
                 >
                     <button
@@ -35,6 +50,7 @@ function Random({ current, next, onSwipe, loadedRandomGif }) {
                     </button>
                 </CSSTransition>
             </SwitchTransition>
+            {!isloaded && <Loader />}
         </section>
     );
 }
