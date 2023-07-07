@@ -5,7 +5,7 @@ import Loader from '../components/Loader/Loader';
 
 import Slide from '../components/Slide/Slide';
 function Random({ current, next, onSwipe, loadedRandomGif }) {
-    const [isloaded, setIsLoaded] = useState(false);
+    const [isloaded, setIsLoaded] = useState(true);
     function handleSwipe() {
         onSwipe((prev) => (prev === 'current' ? 'next' : 'current'));
         setIsLoaded(false);
@@ -19,7 +19,7 @@ function Random({ current, next, onSwipe, loadedRandomGif }) {
         <section className='random'>
             <SwitchTransition mode={'out-in'}>
                 <CSSTransition
-                    timeout={1000}
+                    timeout={1100}
                     key={loadedRandomGif}
                     classNames='fade'
                 >
@@ -36,9 +36,10 @@ function Random({ current, next, onSwipe, loadedRandomGif }) {
                     )}
                 </CSSTransition>
             </SwitchTransition>
+
             <SwitchTransition mode={'out-in'}>
                 <CSSTransition
-                    timeout={1100}
+                    timeout={1500}
                     key={loadedRandomGif}
                     classNames='opacity'
                 >

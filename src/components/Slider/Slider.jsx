@@ -1,15 +1,17 @@
 import './Slider.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { useRef, useEffect, useState } from 'react';
 
 import { EffectCoverflow, Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';
 import 'swiper/css/navigation';
-
 function Slider({ cards }) {
+    const refSlider = useRef();
+
     const settingsSlider = {
         rotate: -10,
-        stretch: 10,
+        stretch: 15,
         depth: 100,
         modifier: 2.5,
     };
@@ -25,7 +27,7 @@ function Slider({ cards }) {
         },
     };
     return (
-        <div>
+        <div ref={refSlider}>
             <Swiper
                 effect={'coverflow'}
                 grabCursor={true}

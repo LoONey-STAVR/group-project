@@ -21,35 +21,9 @@
     opacity: 1;
 }
 
-.random__btn_disabled {
-    animation: fade 1s forwards;
-}
-
 @media screen and (max-width: 500px) {
     .random__btn {
         font-size: 14px;
-    }
-}
-
-@keyframes fade {
-    0% {
-        pointer-events: none;
-        cursor: default;
-    }
-    25% {
-        opacity: 1;
-    }
-
-    50% {
-        opacity: 0;
-    }
-    75% {
-        opacity: 0;
-    }
-    100% {
-        pointer-events: all;
-        opacity: 1;
-        cursor: pointer;
     }
 }
 

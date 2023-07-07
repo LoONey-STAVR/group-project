@@ -1,26 +1,19 @@
 import './Card.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import Share from '../Share/Share';
 import ToolTip from '../ToolTip/ToolTip';
 import '../../css/animation-ascent.css';
-import { useRef } from 'react';
 
+import { useInView } from 'react-intersection-observer';
 function Card({ card, onCard = null }) {
+    const { ref, inView, entry } = useInView({
+        /* Optional options */
+        threshold: 0.3,
+        triggerOnce: true,
+    });
+
     const [isCopy, setIsCopy] = useState(false);
-    const refCard = useRef();
-
-    const [position, setPosition] = useState(0);
-    useEffect(() => {
-        function fc() {
-            setPosition(refCard.current.getBoundingClientRect().top);
-        }
-        window.addEventListener('scroll', fc);
-
-        return () => {
-            window.removeEventListener('scroll', fc);
-        };
-    }, []);
 
     function handleShare(e) {
         e.stopPropagation();
@@ -37,26 +30,34 @@ function Card({ card, onCard = null }) {
     }
 
     return (
-        <Link
-            ref={refCard}
-            to={`/${card.id}`}
-            onClick={onCard && handleCard}
-            className={`card card-big ${position < -10 && 'card_out'} animation-ascent`}
-            style={{ backgroundImage: `url(${position < -500 ? '' : card.images.downsized.url})` }}
+        <div
+            ref={ref}
+            className='card'
         >
-            <Share
-                onShare={handleShare}
-                name='card'
-                isActive={isCopy}
-            />
-            <ToolTip
-                name='card'
-                isActive={isCopy}
-            />
-            <div className='card__title-zone'>
-                <h2 className='card__title'>{card.title}</h2>
-            </div>
-        </Link>
+            {inView ? (
+                <Link
+                    to={`/${card.id}`}
+                    onClick={onCard && handleCard}
+                    className={`card__item animation-ascent`}
+                    style={{ backgroundImage: `url(${card.images.downsized.url})` }}
+                >
+                    <Share
+                        onShare={handleShare}
+                        name='card'
+                        isActive={isCopy}
+                    />
+                    <ToolTip
+                        name='card'
+                        isActive={isCopy}
+                    />
+                    <div className='card__title-zone'>
+                        <h2 className='card__title'>{card.title}</h2>
+                    </div>
+                </Link>
+            ) : (
+                <div className='card__sceleton' />
+            )}
+        </div>
     );
 }
 export default Card;
