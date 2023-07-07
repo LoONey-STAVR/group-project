@@ -54,19 +54,18 @@
 @media (max-width: 900px) {
     .nav-menu {
         opacity: 0;
-        visibility: hidden;
-        transform: translateX(-300%);
-        transition: transform 0.7s ease;
+        transform: translateY(-300%);
+      
     }
     .nav-menu.active {
         opacity: 1;
-        visibility: visible;
+
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 30px;
-        transform: translateX(0%);
-        transition: all 0.9s ease-out;
+        transition: all 0.7s ease;
+        transform: translateY(0%);
     }
     .nav-menu__link {
         font-size: 22px;
